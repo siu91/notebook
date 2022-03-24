@@ -1,0 +1,9 @@
+[book]
+authors = ["Siu"]
+language = "zh-CN"
+multilingual = false
+src = "pages"
+title = "Siu 的笔记本"
+
+[build]
+build-dir = ".book"   

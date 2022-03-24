@@ -1,0 +1,54 @@
+/common/common.iml
+/common/data/cache/cache.iml
+/common/data/cache/rediscache/rediscache.iml
+/common/data/dao/dao.iml
+/common/data/dao/mybatis/mybatis.iml
+/common/data/data.iml
+/common/data/datasource/datasource.iml
+/common/data/datasource/single-datasource/single-datasource.iml
+/common/define/define.iml
+/common/network/httpclient/httpclient.iml
+/common/network/network.iml
+/common/util/util.iml
+/parent/spring-boot/spring-boot.iml
+/server/dccserver/dccserver.iml
+/server/server.iml
+/server/serverbase/serverbase.iml
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Eclipse
+.project
+.classpath
+.settings
+
+# Idea
+.idea
+*.iml
+*.iws
+*.ipr
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Gradle
+.gradle
+!gradle-wrapper.jar
+
+# Maven
+target
+
+# Build
+out
+build
+ #bin
+
+# Other
+*.log
+*.swp
+*.bak
