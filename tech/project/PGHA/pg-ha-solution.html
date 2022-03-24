@@ -1,0 +1,1355 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>PG HA 方案 - Siu 的笔记本</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../SUMMARY.html"><strong aria-hidden="true">1.</strong> 架构和设计</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../tech/project/PGHA/pg-ha-solution.html" class="active"><strong aria-hidden="true">1.1.</strong> PG HA 方案</a></li><li class="chapter-item expanded "><a href="../../../tech/project/kubesphere/基于Linux安装kubesphere3多节点集群(prod).html"><strong aria-hidden="true">1.2.</strong> KuberSphere 生产部署方案</a></li><li class="chapter-item expanded "><a href="../../../tech/project/lwpoc/lwpoc/架构/构建实时湖仓.html"><strong aria-hidden="true">1.3.</strong> 构建实时湖仓</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/index.html"><strong aria-hidden="true">1.4.</strong> CICD 设计</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/CICD架构.html"><strong aria-hidden="true">1.4.1.</strong> CI/CD 架构</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/Jenkins_Cluster.html"><strong aria-hidden="true">1.4.2.</strong> Jenkins 集群</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/多分支流水线设计.html"><strong aria-hidden="true">1.4.3.</strong> 多分支流水线设计</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/cec-jpl设计.html"><strong aria-hidden="true">1.4.4.</strong> cec-jpl 设计</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/数据库自动化.html"><strong aria-hidden="true">1.4.5.</strong> 数据库自动化</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/账号体系.html"><strong aria-hidden="true">1.4.6.</strong> 账号体系</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../../SUMMARY.html"><strong aria-hidden="true">2.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../tech/bestpractices/sql性能测试工具的设计.html"><strong aria-hidden="true">2.1.</strong> sql 性能测试工具的设计</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/jrudf/doris-remote-udf.html"><strong aria-hidden="true">2.2.</strong> Doris Remote UDF 的开发和测试</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/禅道工作流.html"><strong aria-hidden="true">2.3.</strong> 禅道工作流</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/单元测试规范.html"><strong aria-hidden="true">2.4.</strong> 单元测试规范</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/数据库自动化-Flyway使用规范.html"><strong aria-hidden="true">2.5.</strong> 数据库自动化：Flyway</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/语义化版本控制规范.html"><strong aria-hidden="true">2.6.</strong> 语义化版本</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/API设计规范.html"><strong aria-hidden="true">2.7.</strong> API设计规范</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/git-collaborative-development-tutorials/git协同开发指南.html"><strong aria-hidden="true">2.8.</strong> git 协同开发指南</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/code-review-guide-baseon-gitlab.html"><strong aria-hidden="true">2.9.</strong> Gitlab Code Review 指南</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/gitlab-issue-workflow.html"><strong aria-hidden="true">2.10.</strong> Gitlab Issue 工作流</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/Python编码规范.html"><strong aria-hidden="true">2.11.</strong> Python 编码规范</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Siu 的笔记本</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#pg-ha-方案" id="pg-ha-方案">PG HA 方案</a></h1>
+<blockquote>
+<p>By <a href="https://siu91.github.io/notes/#/./%E6%95%B0%E6%8D%AE%E5%BA%93/PG/PGHA/PG%20HA%E6%96%B9%E6%A1%88">Siu</a> 2020年12月</p>
+</blockquote>
+<h1><a class="header" href="#1-介绍" id="1-介绍">1 介绍</a></h1>
+<blockquote>
+<p>​       方案中使用 <a href="https://www.postgresql.org/docs/10/warm-standby-failover.html">PostgreSQL Failover、Warm Standby</a> 的特性，安装 <a href="https://github.com/citusdata/pg_auto_failover">pg_auto_failover</a> 扩展服务，为PostgreSQL 服务实现安全的自动故障转移。</p>
+</blockquote>
+<p><em><strong>以下方案或验证中，考虑实际单个机房内某台主机的故障情况；非应对整个机房瘫痪的双活/异地容灾高可用方案。</strong></em></p>
+<p><strong>高可用的几个阶段：</strong></p>
+<ul>
+<li>
+<p>冷备：需要停机恢复，数据丢失风险；</p>
+</li>
+<li>
+<p>双机热备：需要停机恢复；</p>
+</li>
+<li>
+<h5><a class="header" href="#activestandby-模式进一步可以配置单写多读读写分离" id="activestandby-模式进一步可以配置单写多读读写分离">Active/Standby 模式：进一步可以配置单写多读，读写分离；</a></h5>
+</li>
+<li>
+<p><del>互为主备</del>：相比于 Active/Standby ，更合理理由服务器资源。目前 PG 没有合适的候选方案；</p>
+</li>
+<li>
+<p>同城双活：可以解决某个 IDC 机房整体挂掉的情况（停电，断网等）；</p>
+</li>
+<li>
+<p>异地双活：应对大部分的灾备情况，但是碰到大面积停电，或者自然灾害的时候，服务依然会中断；</p>
+</li>
+<li>
+<p>异地多活：理想方案。</p>
+</li>
+</ul>
+<h2><a class="header" href="#11-架构" id="11-架构">1.1 架构</a></h2>
+<h3><a class="header" href="#111-two-standby-sync-架构" id="111-two-standby-sync-架构">1.1.1 two-standby-sync 架构</a></h3>
+<blockquote>
+<p>​		<a href="https://pg-auto-failover.readthedocs.io/en/latest/architecture-multi-standby.html?#number-sync-standbys">two-standby-sync 架构</a>，这种架构下两个 standby 节点都参与复制仲裁 （Node B、Node C），<a href="https://pg-auto-failover.readthedocs.io/en/latest/architecture.html#synchronous-vs-asynchronous-replication">number_sync_standby = 1</a> ，系统始终维护至少<strong>两个数据集副本</strong>，一个在 Node A 主数据库上，另一个在 Node B 或 Node C 上。丢失<strong>任意一个</strong>节点，仍可保证拥有两个数据集副本，三个节点实现 Postgres <strong>服务和数据集</strong>的<strong>高可用性</strong>。</p>
+<p>​		如果需要增加可用的数据副本数，按同样的配置增加节点 ，即可变成 <strong>N-standby-sync 架构</strong>。</p>
+</blockquote>
+<p><img src="assets/arch-two-standby-sync.svg" alt="" /></p>
+<p><em><strong>注：</strong></em></p>
+<blockquote>
+<ul>
+<li>Streaming Replication : <strong>流复制</strong>，PG的特性之一。</li>
+<li><a href="https://pg-auto-failover.readthedocs.io/en/latest/architecture.html#synchronous-vs-asynchronous-replication">number_sync_standby</a> ：同步复制的 standby 节点数；写操作都会阻塞，直到至少收到<code>number_sync_standby</code> 个standby 节点报告同步完成。</li>
+<li><a href="https://pg-auto-failover.readthedocs.io/en/latest/architecture-multi-standby.html?#replication-quorum">replication quorum</a>：是否参与复制仲裁；例图中 3 个 replication quorum = true ，Primary 节点的写操作只要任意一个 Secondary 节点确认即可。</li>
+<li>candidate priority ：选举优先级；当故障转移时，候选节点成为主节点的优先级。</li>
+<li>[replication quorum = true 的节点数]  &gt; number_sync_standbys；一般配置为 [replication quorum = true 的 standby 节点数]  = number_sync_standbys + 1 。</li>
+<li>当可用 standby 节点数 &lt; number_sync_standbys 时 PG 服务将<strong>降级为只读</strong>；故并不是越多的数据副本代表更高的可用性，数据可用副本只是保证了数据的完整性，在实际场景中要权衡。</li>
+<li>上图架构中 Node B、C 两个 standby 故障时，PG 将降级为只读；将 number_sync_standbys 设置为0，将允许写入数据，即使两个备用节点都处于故障状态也是如此。 在这种情况下，将保留生产数据集的单个副本，如果主数据库随后发生故障，则某些数据将丢失， 多少取决于数据备份和恢复机制。</li>
+</ul>
+</blockquote>
+<h3><a class="header" href="#112-three-standby-one-async-架构" id="112-three-standby-one-async-架构">1.1.2 three-standby-one-async 架构</a></h3>
+<blockquote>
+<p>​		<a href="https://pg-auto-failover.readthedocs.io/en/latest/architecture-multi-standby.html?#sample-architectures-with-three-standby-nodes">three-standby-one-async 架构</a>，与 two-standby-sync 不同的是多了一个<strong>异步复制</strong>的节点 <strong>Node D</strong> 。</p>
+<p>​		这种架构适合以下情况：</p>
+<p>​		Node A，B ， C 部署在<strong>同一数据中心</strong>或可用性区域中，而 Node D 部署在另一个数据中心或可用性区域中。 </p>
+</blockquote>
+<p><img src="assets/arch-three-standby-one-async.svg" alt="" /></p>
+<p><em><strong>注：</strong></em></p>
+<blockquote>
+<ul>
+<li>Node D 不会作为故障转移的候选者（candidate priority = 0 ）。</li>
+</ul>
+</blockquote>
+<h2><a class="header" href="#12-可用性分析" id="12-可用性分析">1.2 可用性分析</a></h2>
+<blockquote>
+<p>依据 two-standby-sync 架构做分析。</p>
+</blockquote>
+<table><thead><tr><th></th><th>Monitor</th><th>PG Nodes</th><th>Available</th><th>Failover</th><th></th></tr></thead><tbody>
+<tr><td>1</td><td>:heavy_check_mark: 正常</td><td>大于 2 个节点可用</td><td><strong>是</strong></td><td><strong>是</strong></td><td>/</td></tr>
+<tr><td>2</td><td>:heavy_check_mark:正常</td><td>小于等于 1 个节点可用</td><td><strong>否</strong></td><td><strong>否</strong></td><td>与配置策略相关，当 number_sync_standbys &gt; 0 and synchronous_standby_names 非空时<strong>不可写</strong></td></tr>
+<tr><td>3</td><td>:x:故障</td><td>Primary 可用，至少1个 Secondary 可用</td><td><strong>是</strong></td><td><strong>否</strong></td><td>/</td></tr>
+<tr><td>4</td><td>:x:故障</td><td>Primary 不可用，Secondary 任意状态</td><td><strong>否</strong></td><td><strong>否</strong></td><td><strong>不可写</strong></td></tr>
+<tr><td>5</td><td><em><strong>any</strong></em></td><td>所有节点故障</td><td><strong>否</strong></td><td><strong>否</strong></td><td><strong>完全故障</strong></td></tr>
+</tbody></table>
+<p><em><strong>注：</strong></em></p>
+<blockquote>
+<p>​		只有 Primary 节点时（所有 standby 故障），服务可能降级为只读，取决于 number_sync_standbys 和 synchronous_standby_names 的设置。</p>
+</blockquote>
+<h2><a class="header" href="#a-hrefhttpspg-auto-failoverreadthedocsioenlatestfaqhtmlthe-monitor-is-a-spof-in-pg-auto-failover-design-how-should-we-handle-that13-monitor-spof-a" id="a-hrefhttpspg-auto-failoverreadthedocsioenlatestfaqhtmlthe-monitor-is-a-spof-in-pg-auto-failover-design-how-should-we-handle-that13-monitor-spof-a"><a href="https://pg-auto-failover.readthedocs.io/en/latest/faq.html#the-monitor-is-a-spof-in-pg-auto-failover-design-how-should-we-handle-that">1.3 Monitor SPOF </a></a></h2>
+<ul>
+<li>Monitor 故障时，将无法提供<strong>故障转移</strong>服务；</li>
+<li>Monitor 故障时，将无法分配状态给PG节点（添加节点、故障转移、节点维护）；</li>
+<li>Monitor 故障时，可以<strong>无状态</strong>下<strong>快速恢复</strong>；</li>
+<li>Monitor 故障时，可以从备份数据中<strong>快速恢复</strong>；</li>
+<li>Monitor 故障时，<strong>不影响PG服务</strong>；</li>
+</ul>
+<p><em><strong>注：</strong></em></p>
+<blockquote>
+<p><a href="https://baike.baidu.com/item/%E5%8D%95%E7%82%B9%E6%95%85%E9%9A%9C/3570893">SPOF</a>: 单点故障 (single point of failure)</p>
+</blockquote>
+<h3><a class="header" href="#131-monitor-spof-优化" id="131-monitor-spof-优化">1.3.1 Monitor SPOF 优化</a></h3>
+<blockquote>
+<p>​		在 <a href="https://github.com/citusdata/pg_auto_failover">pg_auto_failover</a> 原有功能基础上，利用 keepalived 的功能设计实现保证 Monitor 节点的高可用。在 Keepalived 中配置 <strong>VRRP instance</strong> ，将<code>VIP</code>绑定到可用的节点，使用 <strong>track_script 、notify_master、notify_backup</strong> 将 keepalived 的状态和 pgafom 的状态绑定，同步<code>MASTER</code>和<code>BACKUP</code>数据；使得同一时间内，两台 Monitor节点只要保证一台主机正常，就能保证<strong>有且只有一个</strong> Monitor 服务在线工作。</p>
+</blockquote>
+<img src="./assets/monitor-spof-solution.svg" style="zoom:175%" />
+<p><strong>Monitor 故障转移：</strong></p>
+<img src="./assets/arch-2standy-Monitor-Failover-Timing-diagram.svg" style="zoom:100%" />
+<p><strong>注：</strong></p>
+<blockquote>
+<ul>
+<li>在此配置中 pgafo 服务不需要设置 <code>systemed enable</code>；</li>
+<li><a href="https://www.jianshu.com/p/7410507d57c3">VRRP即虚拟路由冗余协议(Virtual Router Redundancy Protocol)</a>，它是为了<strong>避免路由器出现单点故障</strong>的一种容错协议。</li>
+<li>MASTER、BACKUP 数据同步直接采用数据<strong>增量</strong>文件同步（rsync）的方式，主要考虑：
+<ul>
+<li>1、数据量非常小 </li>
+<li>2、互为 hot standy 容易数据不一致，且两个节点以上配置切换复杂。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h3><a class="header" href="#132-优化后的架构" id="132-优化后的架构">1.3.2 优化后的架构</a></h3>
+<img src="./assets/arch-2standy-pgafo-arch-optimization.svg" style="zoom:150%" />
+<blockquote>
+<p>​		在此架构下，解决了Monitor 服务的单点故障问题，保证了同一时间内有且只有一个 Monitor 服务在线。上图中也可以看出，优化方案对<strong>应用接入</strong>这一层没有任何影响。</p>
+</blockquote>
+<h2><a class="header" href="#14-方案回退" id="14-方案回退">1.4 方案回退</a></h2>
+<blockquote>
+<p>pg-auto-failover 本身对PG数据库没有侵入，回退或切换方案，只要做相应的数据迁移。</p>
+</blockquote>
+<h2><a class="header" href="#15-主流方案对比" id="15-主流方案对比">1.5 主流方案对比</a></h2>
+<blockquote>
+<p>所有对比方案，均采用 <a href="https://www.postgresql.org/docs/10/warm-standby-failover.html">PostgreSQL Failover、Warm Standby</a> 作为HA核心功能的解决方案。</p>
+</blockquote>
+<table><thead><tr><th></th><th><a href="https://pgpool.net/mediawiki/index.php/Main_Page">Pgpool-II</a></th><th><a href="https://repmgr.org/">Repmgr</a></th><th><a href="https://patroni.readthedocs.io/en/latest/">Patroni</a></th><th><a href="https://github.com/citusdata/pg_auto_failover">pg_auto_failover</a></th></tr></thead><tbody>
+<tr><td><strong>类型</strong></td><td>middleware</td><td>afo tool</td><td>afo tool</td><td>afo tool</td></tr>
+<tr><td><strong>开源协议</strong></td><td><a href="https://pgpool.net/mediawiki/index.php/pgpool-II_License">非开源、当前免费</a></td><td><a href="https://repmgr.org/GPL-v3.txt">GPL v3</a></td><td><a href="https://github.com/zalando/patroni/blob/master/LICENSE">License (MIT)</a></td><td><a href="https://github.com/citusdata/pg_auto_failover/blob/master/LICENSE">PostgreSQL License</a></td></tr>
+<tr><td><strong>源码</strong></td><td>/</td><td><a href="https://github.com/2ndQuadrant/repmgr">2ndQuadrant/repmgr</a></td><td><a href="https://github.com/zalando/patroni">zalando/patroni</a></td><td><a href="https://github.com/citusdata/pg_auto_failover">citusdata/pg_auto_failover</a></td></tr>
+<tr><td><strong>配置复杂度</strong></td><td>较高</td><td>中</td><td>高</td><td>低</td></tr>
+<tr><td><strong>维护难度</strong></td><td>高</td><td>低</td><td>中</td><td>低</td></tr>
+<tr><td><strong>文档</strong></td><td><a href="https://www.pgpool.net/mediawiki/index.php/Documentation">规范、详细 </a></td><td><a href="https://repmgr.org/docs/5.1/index.html">规范、详细 </a></td><td><a href="https://patroni.readthedocs.io/en/latest/">规范、详细 </a></td><td><a href="https://pg-auto-failover.readthedocs.io/">规范、详细、友好 </a></td></tr>
+<tr><td><strong>扩展性</strong></td><td>不支持动态增加节点（待确定）</td><td><em><strong>未收集相关信息</strong></em></td><td><em><strong>未收集相关信息</strong></em></td><td>支持动态增加节点，删除节点</td></tr>
+<tr><td><strong>功能</strong></td><td>连接池、VIP、负载均衡、读写分离、故障转移、数据复制</td><td>故障转移、数据复制</td><td>故障转移、数据复制</td><td>故障转移、数据复制、节点扩展</td></tr>
+<tr><td><strong>问题</strong></td><td>Watchdog leader 、数据一致性导致故障转移失败</td><td>未知（未验证）</td><td>未知（未验证）</td><td>Monitor SPOF</td></tr>
+<tr><td><strong>团队/品牌</strong></td><td>Pgpool-II</td><td>2ndQuadrant</td><td>Zalando SE</td><td>Microsoft/Citus Data</td></tr>
+</tbody></table>
+<blockquote>
+<ul>
+<li>类型：这部分各有有点，中间件对业务是透明的，无侵入，如果中间件稳定功能丰富且适合业务需求，是比较好的选择；Patrotni和其它两个的区别在于它是一个Python的模板，可用于自主配置PG HA工具；</li>
+<li>开源部分：主要考量主要在于开源热度、团队和品牌、许可范围；</li>
+<li>配置和运维：主要考量目前团队对新组件在预期内的掌握程度和未来交维的能力；pg-pool 维护难度较高一部分是配置较为复杂、一部分是功能上丰富，带来一定的熟悉难度；</li>
+<li>扩展性：这个和后期运维关系紧密</li>
+<li>功能：主要考量我们目前的业务需求和未来的主要规划；</li>
+<li>性能：性能部分未单独考量，因为只有pg-pool方式需要特别考虑性能（中间件和连接池），其它列出的几种方式都是直接连接PG，只跟PG 驱动和同步复制相关；基准测试部分会有个基础依据；</li>
+</ul>
+</blockquote>
+<p><strong>注：pg 驱动支持读写分离，负载均衡（待验证）</strong></p>
+<h1><a class="header" href="#2-准备" id="2-准备">2 准备</a></h1>
+<h2><a class="header" href="#21-主机规划" id="21-主机规划">2.1 主机规划</a></h2>
+<blockquote>
+<p>开发测试环境</p>
+</blockquote>
+<table><thead><tr><th>节点名称</th><th>CPU</th><th>内存</th><th>系统盘</th><th>数据盘1</th><th>数据盘2</th><th>备注</th><th>是否必须</th></tr></thead><tbody>
+<tr><td>pg-node1</td><td>4C</td><td>16G</td><td>60G</td><td>1T</td><td>60G</td><td>Postgres 节点</td><td>是</td></tr>
+<tr><td>pg-node2</td><td>4C</td><td>16G</td><td>60G</td><td>1T</td><td>60G</td><td>Postgres 节点</td><td>是</td></tr>
+<tr><td>pg-node3</td><td>4C</td><td>16G</td><td>60G</td><td>1T</td><td>60G</td><td>Postgres 节点</td><td>是</td></tr>
+<tr><td>pg-afom1</td><td>2C</td><td>2G</td><td>60G</td><td>60G</td><td>/</td><td>pg afo  monitor 节点</td><td>是</td></tr>
+<tr><td>pg-afom2</td><td>2C</td><td>2G</td><td>60G</td><td>60G</td><td>/</td><td>pg afo  monitor 节点</td><td><strong>否</strong></td></tr>
+</tbody></table>
+<blockquote>
+<p>说明：</p>
+<ul>
+<li>pg-node 数据盘1作为postgres 的数据盘，统一挂载在 /data/pg10 ;数据盘2作为pg-auto-failover monito的数据备份盘统一挂载在 /pgafo/monitor</li>
+<li>pg-afom 数据盘1作为pg-auto-failover monito的数据盘和数据备份盘统一挂载在 /pgafo/monitor</li>
+<li>注：测试、开发环境资源不足可以暂时规划 <code>4C/8G/20G/200G/20G</code> <code>2C/2G/20G/20G/</code></li>
+<li>生产环境根据业务规模规划</li>
+</ul>
+<p>磁盘挂载：https://cloud.tencent.com/developer/article/1496311</p>
+<ul>
+<li>
+<p>设置主机名：hostnamectl set-hostname [host-name]</p>
+<p>192.168.5.149 pg-node1
+192.168.5.150 pg-node2
+192.168.5.151 pg-node3
+192.168.6.170 pg-afom1</p>
+</li>
+</ul>
+</blockquote>
+<h2><a class="header" href="#22-a-hrefhttpswwwpostgresqlorgdocs10kernel-resourceshtmlpostgres-kernel-调优a" id="22-a-hrefhttpswwwpostgresqlorgdocs10kernel-resourceshtmlpostgres-kernel-调优a">2.2 <a href="https://www.postgresql.org/docs/10/kernel-resources.html">Postgres Kernel 调优</a></a></h2>
+<blockquote>
+<p>针对数据库相关的内核参数，按需调优。<a href="https://www.postgresql.org/docs/10/kernel-resources.html">参考</a></p>
+</blockquote>
+<h2><a class="header" href="#23-配置节点时钟同步" id="23-配置节点时钟同步">2.3 配置节点时钟同步</a></h2>
+<blockquote>
+<p><strong>生产必须</strong></p>
+</blockquote>
+<h2><a class="header" href="#24-配置ssh互信" id="24-配置ssh互信">2.4 配置SSH互信</a></h2>
+<blockquote>
+<p>SSH方式自动部署必须配置，参考：./pgafo -a</p>
+</blockquote>
+<h1><a class="header" href="#3-安装" id="3-安装">3 安装</a></h1>
+<pre><code class="language-shell"># 解压部署包，目录下 config为配置文件
+unzip PGHA.zip &amp;&amp; cd PGHA &amp;&amp; chmod +x pgafo
+# -p 初始化各节点
+# -c 清理旧的afo环境（重新安装时需要）
+# -i 安装afo基础环境
+./pgafo -p -c -i
+
+# -r 启动afo
+su ha-admin
+./pgafo -r
+</code></pre>
+<p>配置文件如下（按实际配置）：</p>
+<pre><code class="language-shell"># ha-admin password,operation user
+HA_ADMIN_PASS='ha1234'
+# PG server trusted network segment
+PG_HBA_MD5=&quot;192.168.31.1/24 192.168.1.1/24 192.168.2.1/24&quot;
+# PG version
+PG_VERSION='10'
+# PG subversion
+PG_SUB_VERSION='15'
+
+# PG port
+PG_PORT='5432'
+# PG afo monitor port
+PGM_PORT='5431'
+
+# PG afo monitor hostname
+PG_AFOM_HOSTNAME=&quot;pg-afom&quot;
+# node list info
+NODE_LIST=&quot;${PG_AFOM_HOSTNAME}:192.168.5.151 pg-node1:192.168.5.149 pg-node2:192.168.5.150 pg-node3:192.168.6.170&quot;
+</code></pre>
+<h1><a class="header" href="#4-运维" id="4-运维">4 运维</a></h1>
+<h2><a class="header" href="#41-pgafo" id="41-pgafo">4.1 pgafo</a></h2>
+<pre><code class="language-shell">[root@pg-node1 PGHA]# ./pgafo -v
+
+  ================================================
+  #                 pgafo 工具                   #
+  # 版本： 1.0.0                                 #
+  # 作者： Siu                                   #
+  # 支持： postgres 10,11,12                     #
+  # GCC: (GNU) 4.8.5 20150623 (Red Hat 4.8.5-28) #
+  ================================================
+
+
+
+Usage: ./pgafo -p
+       ./pgafo -s
+       ./pgafo -l
+       ./pgafo -c local
+       ./pgafo -p -c -i
+       ./pgafo -d pg-node5
+
+Options:
+  -a      设置当前用户 ssh 免密
+  -p      初始化主机
+  -c      清理旧 afo 环境（重装时需要，必须输入验证码二次确认）
+  -i      安装 afo 基础环境（必须输入验证码二次确认）
+  -r      启动 afo、afom
+  -b      备份 afo monitor数据
+  -n      查看节点信息
+  -s      查看节点信息（节点情况、连接串、pg_autoctl 配置文件、节点配置）
+  -d      删除节点（必须二次确认）
+  -o      主动故障转移（必须二次确认）
+  -g      设置 postgresql.conf（需要重启PG）
+  -l      查看服务日志
+  -m      维护节点
+  -R      维护完成，启用节点
+  -h      帮助信息
+  -v      pgafo 工具版本信息
+</code></pre>
+<h2><a class="header" href="#42-运维操作" id="42-运维操作">4.2 运维操作</a></h2>
+<h3><a class="header" href="#421-查看节点状态" id="421-查看节点状态">4.2.1 查看节点状态</a></h3>
+<blockquote>
+<p>./pgafo -n 2  # 每隔两秒输出当前节点的状态</p>
+</blockquote>
+<p><img src="./assets/image-1-show-nodes.png" alt="image-20201209105213328" /></p>
+<h3><a class="header" href="#422-查看系统日志" id="422-查看系统日志">4.2.2 查看系统日志</a></h3>
+<blockquote>
+<p>./pgafo -l</p>
+</blockquote>
+<p><img src="./assets/image-2-show-logs.png" alt="image-20201209105432929" /></p>
+<h3><a class="header" href="#423-节点维护" id="423-节点维护">4.2.3 节点维护</a></h3>
+<blockquote>
+<p>将节点置为维护状态，适用于主机内核升级等情况；</p>
+</blockquote>
+<p><strong>Secondary 节点维护</strong></p>
+<blockquote>
+<p>./pgafo -m</p>
+</blockquote>
+<p><img src="./assets/image-3-maintenance-secondary.png" alt="image-20201209105723122" /></p>
+<p><strong>Primary 节点维护</strong></p>
+<blockquote>
+<p>./pgafo -m</p>
+</blockquote>
+<p><img src="./assets/image-4-maintenance-primary.png" alt="image-20201209110001608" /></p>
+<h3><a class="header" href="#424-节点伸缩" id="424-节点伸缩">4.2.4 节点伸缩</a></h3>
+<p><strong>删除节点</strong></p>
+<blockquote>
+<p>./pgafo -d [hostname]</p>
+</blockquote>
+<p><strong>增加节点</strong></p>
+<blockquote>
+<p>参考安装，只需要在新的节点安装为 postgres 节点即可成为新的节点加入。</p>
+</blockquote>
+<h1><a class="header" href="#5-测试" id="5-测试">5 测试</a></h1>
+<table><thead><tr><th>序号</th><th>测试项</th><th>预期</th><th>目的</th></tr></thead><tbody>
+<tr><td>1</td><td>故障转移测试</td><td>1）、任意一个节点故障，不影响PG服务和数据完整<br/>2）、任意两个节点故障： <br/>                                   a、所有 standby 故障， 当可用 standby 节点数 &lt; number_sync_standbys 时 PG 服务将降级为只读；<br/>                                   b、主节点和其中一个 standby 节点故障，不影响PG服务，有可能影响数据完整性（取绝于接管主PG服务的节点是否是最后执行复制仲裁的节点或故障时有无读请求）<br/>3）、Monitor 故障不影响PG服务和数据完整性，只会影响故障转移；<br/>4）、Monitor SPOF 解决方案的可行性；<br/>5）、Monitor SPOF 解决方案的可靠性；<br/>6）、基于pg-auto-failover 的PG HA方案的可靠性；</td><td>验证 HA，failover可靠性</td></tr>
+<tr><td>2</td><td>JDBC 应用测试</td><td>应用正常使用</td><td>验证现有应用使用 JDBC HA方式能正常使用，业务上无侵入。</td></tr>
+<tr><td>3</td><td>数据库基准测试</td><td>性能差距在 <strong>5% 左右</strong>，小于 10%</td><td>验证方案，JDBC HA方式连接对性能没有影响 。</td></tr>
+<tr><td>4</td><td>数据库压测</td><td>/</td><td>测试数据稳定性，发现未知问题。</td></tr>
+</tbody></table>
+<h2><a class="header" href="#51--故障转移测试" id="51--故障转移测试">5.1  故障转移测试</a></h2>
+<blockquote>
+<p>依据 two-standby-sync 架构做整体方案的功能和可靠性验证。</p>
+</blockquote>
+<h3><a class="header" href="#511-场景一-任意一个-pg-节点故障" id="511-场景一-任意一个-pg-节点故障">5.1.1 场景一 ：任意一个 PG 节点故障</a></h3>
+<blockquote>
+<p>​		由于这种场景下 Secondary 节点故障并不会触发故障转移（重新选择主节点），故在测试中制造 Primary 节点故障。</p>
+</blockquote>
+<table><thead><tr><th>Monitor</th><th>Primary</th><th>Scondary1</th><th>Scondary2</th><th>Available</th><th>Failover</th></tr></thead><tbody>
+<tr><td>:heavy_check_mark:</td><td>:heavy_check_mark:</td><td>:heavy_check_mark:</td><td>:heavy_check_mark:</td><td><strong>是</strong></td><td><strong>是</strong></td></tr>
+</tbody></table>
+<p><strong>故障转移测试：</strong></p>
+<ul>
+<li>
+<p>手动造成 Primary 节点服务故障（断电，关机）；</p>
+<p><img src="./assets/image-5-show-nodes-2.png" alt="" />
+<img src="./assets/image-20201201170824122.png" alt="image-20201201170824122" /></p>
+</li>
+<li>
+<p>观察故障转移：新主节点产生，原主节点被降级</p>
+<p><img src="./assets/image-7-show-nodes-3.png" alt="image-20201201171005957" /></p>
+</li>
+<li>
+<p>重启原 Primary 节点</p>
+</li>
+<li>
+<p>观察故障转移：原 Primary 节点重新加入，开始同步 LSN</p>
+<p><img src="./assets/image-8-show-nodes-4.png" alt="image-20201201171116383" /></p>
+</li>
+<li>
+<p>观察故障转移：新的 Primary 节点状态 从 join_primary 变为 primary</p>
+<p><img src="./assets/image-9-show-nodes-5.png" alt="image-20201201170543638" /></p>
+</li>
+</ul>
+<h3><a class="header" href="#512-场景二-任意两个-pg-节点故障" id="512-场景二-任意两个-pg-节点故障">5.1.2 场景二 ：任意两个 PG 节点故障</a></h3>
+<blockquote>
+<p>验证 number_sync_standbys 和 synchronous_standby_names 配置的影响</p>
+</blockquote>
+<p><strong>故障转移测试1：两个 Secondary 节点故障</strong></p>
+<table><thead><tr><th>Monitor</th><th>Primary</th><th>Scondary1</th><th>Scondary2</th><th>Available</th><th>Failover</th></tr></thead><tbody>
+<tr><td>:heavy_check_mark:</td><td>:heavy_check_mark:</td><td>:x:</td><td>:x:</td><td><strong>否</strong></td><td><strong>否</strong></td></tr>
+</tbody></table>
+<ul>
+<li>
+<p>手动造成两个 Secondary 节点故障（断电/关机）；</p>
+<ul>
+<li>
+<p>关机前节点状态</p>
+<p><img src="./assets/image-23-show-nodes-12.png" alt="image-20201217141232815" /></p>
+</li>
+<li>
+<p>pg-node2、pg-node3 关机 （pg-node1 降级只读，写阻塞）</p>
+<p><img src="./assets/image-24-show-nodes-13.png" alt="image-20201217144349908" /></p>
+<p><img src="./assets/image-25-primary-node-write-block.png" alt="image-20201217142245830" /></p>
+</li>
+<li>
+<p>设置 number-sync-standbys=0 ,synchronous_standby_names=''（pg-node1 可读写）</p>
+<pre><code class="language-shell"># 设置 number-sync-standbys = 0
+/usr/pgsql-10/bin/pg_autoctl set formation number-sync-standbys 0 --pgdata /pgafo/monitor/pgafomonitor
+
+# 设置 synchronous_standby_names = ''
+/usr/pgsql-10/bin/pg_autoctl set node replication-quorum false --name pg-node2 --pgdata /pgafo/monitor/pgafomonitor
+/usr/pgsql-10/bin/pg_autoctl set node replication-quorum false --name pg-node3 --pgdata /pgafo/monitor/pgafomonitor
+</code></pre>
+<p><img src="./assets/image-26-enable-write-on-all-standby-fail.png" alt="image-20201217144234770" /></p>
+<p><img src="./assets/image-27-primary-node-writable.png" alt="image-20201217144520951" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>故障转移测试2：Primary 节点故障，一个Secondary 故障</strong></p>
+<table><thead><tr><th>Monitor</th><th>Primary</th><th>Scondary1</th><th>Scondary2</th><th>Available</th><th>Failover</th></tr></thead><tbody>
+<tr><td>:heavy_check_mark:</td><td>:x:</td><td>:heavy_check_mark:</td><td>:x:</td><td><strong>是</strong></td><td><strong>否</strong></td></tr>
+</tbody></table>
+<ul>
+<li>
+<p>手动造成 Primary 和一个 Secondary 节点故障（断电/关机）；</p>
+<ul>
+<li>
+<p>关机前节点状态</p>
+<p><img src="C:%5CUsers%5CWorkstation%5Cnotes%5C%E6%95%B0%E6%8D%AE%E5%BA%93%5CPG%5CPGHA%5Cassets%5Cimage-20201218093034525.png" alt="image-20201218093034525" /></p>
+</li>
+<li>
+<p>关机后故障转移（synchronous_standby_names 自动配置为空）</p>
+<p><img src="C:%5CUsers%5CWorkstation%5Cnotes%5C%E6%95%B0%E6%8D%AE%E5%BA%93%5CPG%5CPGHA%5Cassets%5Cimage-20201218093551078.png" alt="image-20201218093551078" /></p>
+<p><img src="C:%5CUsers%5CWorkstation%5Cnotes%5C%E6%95%B0%E6%8D%AE%E5%BA%93%5CPG%5CPGHA%5Cassets%5Cimage-20201218093736339.png" alt="image-20201218093736339" /></p>
+</li>
+<li>
+<p>故障节点重新加入（重启 pg-node2、pg-node3）</p>
+<p><img src="C:%5CUsers%5CWorkstation%5Cnotes%5C%E6%95%B0%E6%8D%AE%E5%BA%93%5CPG%5CPGHA%5Cassets%5Cimage-20201218100929700.png" alt="image-20201218100929700" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>​		Primary 节点和 Secondary 节点同时故障，另一个 Secondary 节点变成唯一副本，会升级为主节点（wait_primary），synchronous_standby_names 自动配置为空；待故障节点重新加入时，synchronous_standby_names 自动配置为相应的配置。</p>
+</blockquote>
+<h3><a class="header" href="#513-场景三monitor-节点故障" id="513-场景三monitor-节点故障">5.1.3 场景三：Monitor 节点故障</a></h3>
+<table><thead><tr><th>Monitor</th><th>Primary</th><th>Scondary1</th><th>Scondary2</th><th>Available</th><th>Failover</th></tr></thead><tbody>
+<tr><td>:x:</td><td>:heavy_check_mark:</td><td>:heavy_check_mark:</td><td><em><strong>any</strong></em></td><td><strong>是</strong></td><td><strong>否</strong></td></tr>
+</tbody></table>
+<p><strong>故障转移测试：</strong></p>
+<ul>
+<li>
+<p>手动造成 一个 Monitor 节点故障（断电/关机）；</p>
+</li>
+<li>
+<p>手动造成 一个 Secondary 节点故障（断电/关机）；</p>
+</li>
+<li>
+<p>观察PG服务是否可用；</p>
+<p><img src="./assets/image-15-show-pg-status.png" alt="image-20201202154927886" /></p>
+</li>
+<li>
+<p>重启 故障节点，恢复：</p>
+<p><img src="./assets/image-16-show-nodes-11.png" alt="image-20201202160018382" /></p>
+</li>
+</ul>
+<p><em><strong>注：</strong></em></p>
+<blockquote>
+<p><strong>可增加 Monitor SPOF 解决方案，防止单点影响</strong>。</p>
+</blockquote>
+<h3><a class="header" href="#514-monitor-故障转移测试" id="514-monitor-故障转移测试">5.1.4 Monitor 故障转移测试</a></h3>
+<table><thead><tr><th>Monitor1</th><th>Monitor2</th><th>Failover</th></tr></thead><tbody>
+<tr><td>:x:</td><td>:heavy_check_mark:</td><td><strong>是</strong></td></tr>
+</tbody></table>
+<p><strong>故障转移测试：</strong></p>
+<ul>
+<li>
+<p>手动造成 一个 Monitor 节点（MASTER）故障（断电/关机）；</p>
+<img src="./assets/image-17-show-monitor-1.png" style="zoom:70%" align=left />
+</li>
+</ul>
+<img src="./assets/image-18-reboot.png" style="zoom:70%" align=left />
+<ul>
+<li>
+<p>另一个备用 Monitor 节点接管服务</p>
+<img src="./assets/image-19-monitor-failover.png" style="zoom:170%" align=left />
+</li>
+</ul>
+<img src="./assets/image-20-show-monitor-2.png" style="zoom:70%" align=left />
+<h3><a class="header" href="#515-monitor-failover-压测" id="515-monitor-failover-压测">5.1.5 Monitor Failover 压测</a></h3>
+<blockquote>
+<p>7 X 24小时 ，模拟Monitor 节点故障（两个节点先后故障，间隔5分钟，每小时触发一次）</p>
+</blockquote>
+<p><strong>两个节点每个小时定时重启</strong></p>
+<pre><code class="language-shell"># Node1
+crontab -l
+25 * * * * /sbin/reboot
+
+# Node2
+crontab -l
+31 * * * * /sbin/reboot
+</code></pre>
+<p><em><strong>failover 日志：</strong></em></p>
+<img src="./assets/image-21-monitor-failover-dblogs.png" style="zoom:120%" align=left />
+<h3><a class="header" href="#516-primary-failover-压测" id="516-primary-failover-压测">5.1.6 Primary Failover 压测</a></h3>
+<blockquote>
+<p>7 X 24小时 ，每个小时让 Primary 节点故障两次（间隔10分钟）</p>
+</blockquote>
+<pre><code class="language-shell"># Node1
+crontab -l
+5 * * * * sh /opt/PGHA/failovertest.sh
+55 * * * * sh /opt/PGHA/failovertest.sh
+
+# Node2
+crontab -l
+5 * * * * sh /opt/PGHA/failovertest.sh
+55 * * * * sh /opt/PGHA/failovertest.sh
+
+# Node3
+crontab -l
+5 * * * * sh /opt/PGHA/failovertest.sh
+55 * * * * sh /opt/PGHA/failovertest.sh
+</code></pre>
+<pre><code class="language-shell">#!/bin/bash
+# failovertest.sh
+
+is_secondary=$(sudo su postgres -c &quot;psql -p 5432 -c 'select * from pg_is_in_recovery();'&quot; | head -n 3|tail -n 1)
+is_secondary=`echo $is_secondary`
+
+# 如果是主节点
+if [[ ${is_secondary} == &quot;f&quot; ]]; then
+  echo &quot;10秒后重启系统&quot;
+  sleep 10
+  /sbin/reboot
+fi
+</code></pre>
+<p><em><strong>failover 日志</strong></em></p>
+<p><img src="./assets/image-22-node-failover-dblogs.png" alt="image-20201216112912520" /></p>
+<p><strong>压测中进行故障转移：</strong></p>
+<p><img src="C:%5CUsers%5CWorkstation%5Cnotes%5C%E6%95%B0%E6%8D%AE%E5%BA%93%5CPG%5CPGHA%5Cassets%5Cimage-20201223103411327.png" alt="image-20201223103411327" /></p>
+<h2><a class="header" href="#52-a-hrefhttpsjdbcpostgresqlorgdocumentationheadconnecthtmlconnection-parametersjdbc-测试a" id="52-a-hrefhttpsjdbcpostgresqlorgdocumentationheadconnecthtmlconnection-parametersjdbc-测试a">5.2 <a href="https://jdbc.postgresql.org/documentation/head/connect.html#connection-parameters">JDBC 测试</a></a></h2>
+<blockquote>
+<p>驱动版本：<a href="https://github.com/pgjdbc/pgjdbc">postgresql-42.2.11</a></p>
+</blockquote>
+<h3><a class="header" href="#521-ha-jdbc连接" id="521-ha-jdbc连接">5.2.1 HA JDBC连接</a></h3>
+<p><code>url: jdbc:postgresql://pg-node3:5432,pg-node2:5432,pg-node1:5432/dbname?targetServerType=master </code></p>
+<blockquote>
+<p><strong>测试结果正常</strong></p>
+</blockquote>
+<h3><a class="header" href="#522-读写分离jdbc连接" id="522-读写分离jdbc连接">5.2.2 读写分离JDBC连接</a></h3>
+<blockquote>
+<p>（待验证）</p>
+</blockquote>
+<p><code>url: jdbc:postgresql://pg-node3:5432,pg-node2:5432,pg-node1:5432/dbname?targetServerType=perferSlave </code></p>
+<h2><a class="header" href="#53-数据库基准测试" id="53-数据库基准测试">5.3 数据库基准测试</a></h2>
+<blockquote>
+<p>​		基准测试主要了从 JDBC 驱动层到数据库层完全执行一个指令所需的时钟周期，即测试中实际执行的事务。</p>
+</blockquote>
+<h3><a class="header" href="#531-测试环境" id="531-测试环境">5.3.1 测试环境</a></h3>
+<ul>
+<li><a href="https://sourceforge.net/projects/benchmarksql/">测试工具：BenchMarkSQL 5.0</a> | <a href="https://support.huaweicloud.com/tstg-kunpengdbs/kunpengbenchmarksql_06_0002.html">使用方法</a></li>
+<li>PG 版本： 10.15</li>
+<li>PG 服务器主要参数： 4C 8G</li>
+<li>PG 驱动版本：postgresql-42.2.11</li>
+<li>客户端参数：略</li>
+</ul>
+<blockquote>
+<p>​		BenchmarkSQL is an open source implementation of the popular TPC/C OLTP
+database benchmark. Version 5.0 is a major overhaul of the benchmark driver.
+This version supports Firebird, Oracle and PostgreSQL, adds foreign keys to
+the schema (as required by the specifications) and captures detailed benchmark</p>
+</blockquote>
+<h3><a class="header" href="#532-测试模型tpc-c-标准测试" id="532-测试模型tpc-c-标准测试">5.3.2 测试模型：TPC-C 标准测试</a></h3>
+<p><strong>TPC-C 标准测试模拟了 5 种事务处理，通过这些事务处理来模拟真实的用户操作，事务分别为</strong>:</p>
+<ul>
+<li>新订单（New-Order）</li>
+<li>支付操作(Payment)</li>
+<li>订单状态查询(Order-Status)</li>
+<li>发货(Delivery)</li>
+<li>库存状态查询(Stock-Level)</li>
+</ul>
+<h3><a class="header" href="#533-benchmarksql-指标说明" id="533-benchmarksql-指标说明">5.3.3 BenchmarkSQL 指标说明</a></h3>
+<ul>
+<li>Latency 表示完全执行一个指令所需的时钟周期，潜伏期越少越好。</li>
+<li>tmpC 表示每分钟执行的事务数(NewOrders)</li>
+<li>tmpTOTAL 表示每分钟执行的总事务数</li>
+<li>runMins BenchmarkSQL 测试模式，分为 runTxnsPerTerminal 和 runMins ：
+<ul>
+<li>runTxnsPerTerminal ：每个终端执行数模式</li>
+<li>runMins：执行时长模式</li>
+</ul>
+</li>
+</ul>
+<h3><a class="header" href="#534-ha-jdbc-连接基准测试" id="534-ha-jdbc-连接基准测试">5.3.4 HA JDBC 连接基准测试</a></h3>
+<blockquote>
+<p>采用 BenchmarkSQL runMins 模式进行测试。</p>
+</blockquote>
+<h4><a class="header" href="#5341-a-hrefpressure-testsingle_t16_10m1reporthtml基准参照数据a" id="5341-a-hrefpressure-testsingle_t16_10m1reporthtml基准参照数据a">5.3.4.1 <a href="./pressure-test/single_t16_10m#1/report.html">基准参照数据</a></a></h4>
+<blockquote>
+<p>​		基准参照数据取单机 JDBC 连接的的基准测试，单机是指只有一个主节点，没有 standby 节点数据复制的影响。测试多组，以下指标展示为典型值。</p>
+</blockquote>
+<p><strong>Run Properties</strong></p>
+<blockquote>
+<p>10:45:09,874 [main] INFO   jTPCC : Term-00, +-------------------------------------------------------------+
+10:45:09,875 [main] INFO   jTPCC : Term-00,      BenchmarkSQL v5.0
+10:45:09,875 [main] INFO   jTPCC : Term-00, +-------------------------------------------------------------+
+10:45:09,875 [main] INFO   jTPCC : Term-00,  (c) 2003, Raul Barbosa
+10:45:09,875 [main] INFO   jTPCC : Term-00,  (c) 2004-2016, Denis Lussier
+10:45:09,876 [main] INFO   jTPCC : Term-00,  (c) 2016, Jan Wieck
+10:45:09,877 [main] INFO   jTPCC : Term-00, +-------------------------------------------------------------+
+10:45:09,877 [main] INFO   jTPCC : Term-00,
+10:45:09,878 [main] INFO   jTPCC : Term-00, db=postgres
+10:45:09,878 [main] INFO   jTPCC : Term-00, driver=org.postgresql.Driver
+10:45:09,879 [main] INFO   jTPCC : Term-00, conn=<strong>jdbc:postgresql://pg-node1:5432/pressure</strong>
+10:45:09,879 [main] INFO   jTPCC : Term-00, user=postgres
+10:45:09,879 [main] INFO   jTPCC : Term-00,
+10:45:09,879 [main] INFO   jTPCC : Term-00, warehouses=10
+10:45:09,879 [main] INFO   jTPCC : Term-00, terminals=16
+10:45:09,880 [main] INFO   jTPCC : Term-00, runMins=10
+10:45:09,880 [main] INFO   jTPCC : Term-00, limitTxnsPerMin=100000
+10:45:09,880 [main] INFO   jTPCC : Term-00, terminalWarehouseFixed=true
+10:45:09,880 [main] INFO   jTPCC : Term-00,
+10:45:09,880 [main] INFO   jTPCC : Term-00, newOrderWeight=45
+10:45:09,881 [main] INFO   jTPCC : Term-00, paymentWeight=43
+10:45:09,881 [main] INFO   jTPCC : Term-00, orderStatusWeight=4
+10:45:09,881 [main] INFO   jTPCC : Term-00, deliveryWeight=4
+10:45:09,881 [main] INFO   jTPCC : Term-00, stockLevelWeight=4</p>
+<p>10:55:31,085 [Thread-13] INFO   jTPCC : Term-00, Measured tpmC (NewOrders) = 5435.37
+10:55:31,086 [Thread-13] INFO   jTPCC : Term-00, Measured tpmTOTAL = 12056.08
+10:55:31,086 [Thread-13] INFO   jTPCC : Term-00, Session Start     = 2020-12-18 10:45:30
+10:55:31,086 [Thread-13] INFO   jTPCC : Term-00, Session End       = 2020-12-18 10:55:31
+10:55:31,086 [Thread-13] INFO   jTPCC : Term-00, Transaction Count = 120627</p>
+</blockquote>
+<p><strong>Result Summary</strong></p>
+<table width="1100px" border="2">
+    <tr>
+      <th rowspan="2" width="16%"><b>Transaction<br/>Type</b></th>
+      <th colspan="2" width="24%"><b>Latency</b></th>
+      <th rowspan="2" width="12%"><b>Count</b></th>
+      <th rowspan="2" width="12%"><b>Percent</b></th>
+      <th rowspan="2" width="12%"><b>Rollback</b></th>
+      <th rowspan="2" width="12%"><b>Errors</b></th>
+      <th rowspan="2" width="12%"><b>Skipped<br/>Deliveries</b></th>
+    </tr>
+    <tr>
+      <th width="12%"><b>90th&nbsp;%</b></th>
+      <th width="12%"><b>Maximum</b></th>
+    </tr>
+    <tr>
+      <td align="left">NEW_ORDER</td>
+      <td align="right">0.139s</td>
+      <td align="right">2.956s</td>
+      <td align="right">54384</td>
+      <td align="right">45.084%</td>
+      <td align="right">1.081%</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">PAYMENT</td>
+      <td align="right">0.050s</td>
+      <td align="right">2.917s</td>
+      <td align="right">51700</td>
+      <td align="right">42.859%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">ORDER_STATUS</td>
+      <td align="right">0.017s</td>
+      <td align="right">0.193s</td>
+      <td align="right">4781</td>
+      <td align="right">3.963%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">STOCK_LEVEL</td>
+      <td align="right">0.018s</td>
+      <td align="right">0.617s</td>
+      <td align="right">4863</td>
+      <td align="right">4.031%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">DELIVERY</td>
+      <td align="right">0.000s</td>
+      <td align="right">0.001s</td>
+      <td align="right">4899</td>
+      <td align="right">4.061%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">DELIVERY_BG</td>
+      <td align="right">0.441s</td>
+      <td align="right">3.166s</td>
+      <td align="right">4899</td>
+      <td align="right">N/A</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">0</td>
+    </tr>
+    </table>
+<p><strong>TPM and TL</strong></p>
+<p><img src="./pressure-test/single_t16_10m#1/tpm_nopm.png" alt="" /></p>
+<p><img src="./pressure-test/single_t16_10m#1/latency.png" alt="" /></p>
+<h4><a class="header" href="#5342-a-hrefpressure-testha_t16_10m1reporthtmlha-jdbc-基准测试数据a" id="5342-a-hrefpressure-testha_t16_10m1reporthtmlha-jdbc-基准测试数据a">5.3.4.2 <a href="./pressure-test/ha_t16_10m#1/report.html">HA JDBC 基准测试数据</a></a></h4>
+<blockquote>
+<p>测试多组，以下指标展示为典型值。</p>
+</blockquote>
+<p><strong>Run Properties</strong></p>
+<blockquote>
+<p>12:17:50,020 [main] INFO   jTPCC : Term-00, +-------------------------------------------------------------+
+12:17:50,020 [main] INFO   jTPCC : Term-00,      BenchmarkSQL v5.0
+12:17:50,020 [main] INFO   jTPCC : Term-00, +-------------------------------------------------------------+
+12:17:50,020 [main] INFO   jTPCC : Term-00,  (c) 2003, Raul Barbosa
+12:17:50,020 [main] INFO   jTPCC : Term-00,  (c) 2004-2016, Denis Lussier
+12:17:50,022 [main] INFO   jTPCC : Term-00,  (c) 2016, Jan Wieck
+12:17:50,023 [main] INFO   jTPCC : Term-00, +-------------------------------------------------------------+
+12:17:50,023 [main] INFO   jTPCC : Term-00,
+12:17:50,023 [main] INFO   jTPCC : Term-00, db=postgres
+12:17:50,023 [main] INFO   jTPCC : Term-00, driver=org.postgresql.Driver
+12:17:50,023 [main] INFO   jTPCC : Term-00, conn=<strong>jdbc:postgresql://pg-node3:5432,pg-node2:5432,pg-node1:5432/pressure?targetServerType=master</strong>
+12:17:50,023 [main] INFO   jTPCC : Term-00, user=postgres
+12:17:50,023 [main] INFO   jTPCC : Term-00,
+12:17:50,024 [main] INFO   jTPCC : Term-00, warehouses=10
+12:17:50,024 [main] INFO   jTPCC : Term-00, terminals=16
+12:17:50,025 [main] INFO   jTPCC : Term-00, runMins=10
+12:17:50,025 [main] INFO   jTPCC : Term-00, limitTxnsPerMin=100000
+12:17:50,025 [main] INFO   jTPCC : Term-00, terminalWarehouseFixed=true
+12:17:50,025 [main] INFO   jTPCC : Term-00,
+12:17:50,025 [main] INFO   jTPCC : Term-00, newOrderWeight=45
+12:17:50,025 [main] INFO   jTPCC : Term-00, paymentWeight=43
+12:17:50,025 [main] INFO   jTPCC : Term-00, orderStatusWeight=4
+12:17:50,025 [main] INFO   jTPCC : Term-00, deliveryWeight=4
+12:17:50,026 [main] INFO   jTPCC : Term-00, stockLevelWeight=4</p>
+<p>12:28:21,752 [Thread-9] INFO   jTPCC : Term-00, Measured tpmC (NewOrders) = 4963.44
+12:28:21,752 [Thread-9] INFO   jTPCC : Term-00, Measured tpmTOTAL = 10986.67
+12:28:21,752 [Thread-9] INFO   jTPCC : Term-00, Session Start     = 2020-12-18 12:18:21
+12:28:21,753 [Thread-9] INFO   jTPCC : Term-00, Session End       = 2020-12-18 12:28:21
+12:28:21,753 [Thread-9] INFO   jTPCC : Term-00, Transaction Count = 109971</p>
+</blockquote>
+<p><strong>Result Summary</strong></p>
+<table width="1100px" border="2">
+    <tr>
+      <th rowspan="2" width="16%"><b>Transaction<br/>Type</b></th>
+      <th colspan="2" width="24%"><b>Latency</b></th>
+      <th rowspan="2" width="12%"><b>Count</b></th>
+      <th rowspan="2" width="12%"><b>Percent</b></th>
+      <th rowspan="2" width="12%"><b>Rollback</b></th>
+      <th rowspan="2" width="12%"><b>Errors</b></th>
+      <th rowspan="2" width="12%"><b>Skipped<br/>Deliveries</b></th>
+    </tr>
+    <tr>
+      <th width="12%"><b>90th&nbsp;%</b></th>
+      <th width="12%"><b>Maximum</b></th>
+    </tr>
+    <tr>
+      <td align="left">NEW_ORDER</td>
+      <td align="right">0.170s</td>
+      <td align="right">4.330s</td>
+      <td align="right">49682</td>
+      <td align="right">45.177%</td>
+      <td align="right">1.012%</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">PAYMENT</td>
+      <td align="right">0.062s</td>
+      <td align="right">4.268s</td>
+      <td align="right">47264</td>
+      <td align="right">42.979%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">ORDER_STATUS</td>
+      <td align="right">0.016s</td>
+      <td align="right">0.271s</td>
+      <td align="right">4330</td>
+      <td align="right">3.937%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">STOCK_LEVEL</td>
+      <td align="right">0.038s</td>
+      <td align="right">0.447s</td>
+      <td align="right">4386</td>
+      <td align="right">3.988%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">DELIVERY</td>
+      <td align="right">0.000s</td>
+      <td align="right">0.001s</td>
+      <td align="right">4309</td>
+      <td align="right">3.918%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">DELIVERY_BG</td>
+      <td align="right">0.455s</td>
+      <td align="right">4.377s</td>
+      <td align="right">4309</td>
+      <td align="right">N/A</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">0</td>
+    </tr>
+    </table>
+**TPM and TL**
+<p><img src="./pressure-test/ha_t16_10m#1/tpm_nopm.png" alt="" /></p>
+<p><img src="./pressure-test/ha_t16_10m#1/latency.png" alt="" /></p>
+<h4><a class="header" href="#5343-基准测试结果" id="5343-基准测试结果">5.3.4.3 基准测试结果</a></h4>
+<table width="1100px" border="2">
+    <tr>
+      <th rowspan="2" width="12%"><b>JDBC Type</b></th>
+	  <th rowspan="2" width="8%"><b>Terminsls</b></th>
+      <th colspan="3" width="30%" align="center"><b>tpmC</b></th>
+	  <th colspan="3" width="30%" align="center"><b>tpmTOTAL</b></th>
+	  <th colspan="2" width="20%" align="center"><b>Average</b></th>
+    </tr>
+    <tr>
+      <th width="10%"><b>#1</b></th>
+      <th width="10%"><b>#2</b></th>
+      <th width="10%"><b>#3</b></th>
+	  <th width="10%"><b>#1</b></th>
+      <th width="10%"><b>#2</b></th>
+      <th width="10%"><b>#3</b></th>
+	  <th width="10%"><b>tpmC</b></th>
+      <th width="10%"><b>tpmTOTAL</b></th>
+    </tr>
+    <tr>
+      <td align="center">HA</td>
+      <td align="center">16</td>
+      <td align="right"><a href='./pressure-test/ha_t16_10m#1/report.html'>4963.44</a></td>
+      <td align="right"><a href='./pressure-test/ha_t16_10m#2/report.html'>4898.79</a></td>
+      <td align="right"><a href='./pressure-test/ha_t16_10m#3/report.html'>4657.05</a></td>
+      <td align="right"><a href='./pressure-test/ha_t16_10m#1/report.html'>10986.67</a></td>
+      <td align="right"><a href='./pressure-test/ha_t16_10m#2/report.html'>10883.45</a></td>
+      <td align="right"><a href='./pressure-test/ha_t16_10m#3/report.html'>10324.87</a></td>
+	  <td align="right">4839.76</td>
+      <td align="right">10731.66</td>
+    </tr>
+    <tr>
+      <td align="center">Single</td>
+      <td align="center">16</td>
+      <td align="right"><a href='./pressure-test/single_t16_10m#1/report.html'>5435.37</a></td>
+      <td align="right"><a href='./pressure-test/single_t16_10m#2/report.html'>5114.47</a></td>
+      <td align="right"><a href='./pressure-test/single_t16_10m#3/report.html'>5412.43</a></td>
+      <td align="right"><a href='./pressure-test/single_t16_10m#1/report.html'>12056.08</a></td>
+      <td align="right"><a href='./pressure-test/single_t16_10m#2/report.html'>11341.28</a></td>
+      <td align="right"><a href='./pressure-test/single_t16_10m#3/report.html'>12007.29</a></td>
+	  <td align="right">5320.76</td>
+      <td align="right">11801.55</td>
+    </tr>
+    </table>
+<h2><a class="header" href="#54-压测" id="54-压测">5.4 压测</a></h2>
+<blockquote>
+<p>压测主要指标解读参照基准测试。</p>
+</blockquote>
+<h4><a class="header" href="#a-hrefpressure-testha_t16_1h1reporthtmlterminal16-主要指标a" id="a-hrefpressure-testha_t16_1h1reporthtmlterminal16-主要指标a"><strong><a href="./pressure-test/ha_t16_1h#1/report.html">terminal=16 主要指标</a></strong></a></h4>
+<p><strong>Run Properties</strong></p>
+<blockquote>
+<p>db=postgres
+driver=org.postgresql.Driver
+conn=jdbc:postgresql://pg-node3:5432,pg-node2:5432,pg-node1:5432/pressure?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;targetServerType=master
+user=postgres</p>
+<p>warehouses=10
+terminals=16
+runMins=60
+limitTxnsPerMin=100000</p>
+<p>Running Average tpmTOTAL: 5960.14    Current tpmTOTAL: 2365524    Memory Usage: 117MB / 159MB</p>
+<p>Measured tpmC (NewOrders) = 2677.05
+Measured tpmTOTAL = 5960.14
+Session Start     = 2020-11-30 15:17:35
+Session End       = 2020-11-30 16:17:37
+Transaction Count = 357847</p>
+</blockquote>
+<p><strong>Result Summary</strong></p>
+<table width="1100px" border="2">
+    <tr>
+      <th rowspan="2" width="16%"><b>Transaction<br/>Type</b></th>
+      <th colspan="2" width="24%"><b>Latency</b></th>
+      <th rowspan="2" width="12%"><b>Count</b></th>
+      <th rowspan="2" width="12%"><b>Percent</b></th>
+      <th rowspan="2" width="12%"><b>Rollback</b></th>
+      <th rowspan="2" width="12%"><b>Errors</b></th>
+      <th rowspan="2" width="12%"><b>Skipped<br/>Deliveries</b></th>
+    </tr>
+    <tr>
+      <th width="12%"><b>90th&nbsp;%</b></th>
+      <th width="12%"><b>Maximum</b></th>
+    </tr>
+    <tr>
+      <td align="left">NEW_ORDER</td>
+      <td align="right">0.362s</td>
+      <td align="right">16.688s</td>
+      <td align="right">160731</td>
+      <td align="right">44.916%</td>
+      <td align="right">0.978%</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">PAYMENT</td>
+      <td align="right">0.189s</td>
+      <td align="right">14.234s</td>
+      <td align="right">154400</td>
+      <td align="right">43.147%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">ORDER_STATUS</td>
+      <td align="right">0.110s</td>
+      <td align="right">2.864s</td>
+      <td align="right">14371</td>
+      <td align="right">4.016%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">STOCK_LEVEL</td>
+      <td align="right">0.072s</td>
+      <td align="right">13.617s</td>
+      <td align="right">14038</td>
+      <td align="right">3.923%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">DELIVERY</td>
+      <td align="right">0.000s</td>
+      <td align="right">0.001s</td>
+      <td align="right">14307</td>
+      <td align="right">3.998%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">DELIVERY_BG</td>
+      <td align="right">0.914s</td>
+      <td align="right">14.876s</td>
+      <td align="right">14307</td>
+      <td align="right">N/A</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">0</td>
+    </tr>
+    </table>
+<p><strong>TPM and TL</strong></p>
+<p><img src="./pressure-test/ha_t16_1h#1/tpm_nopm.png" alt="" /></p>
+<p><img src="./pressure-test/ha_t16_1h#1/latency.png" alt="" /></p>
+<h4><a class="header" href="#a-hrefpressure-testha_t32_1h1reporthtmlterminal32-主要指标a" id="a-hrefpressure-testha_t32_1h1reporthtmlterminal32-主要指标a"><strong><a href="./pressure-test/ha_t32_1h#1/report.html">terminal=32 主要指标</a></strong></a></h4>
+<p><strong>Run Properties</strong></p>
+<blockquote>
+<p>db=postgres
+driver=org.postgresql.Driver
+conn=jdbc:postgresql://pg-node3:5432,pg-node2:5432,pg-node1:5432/pressure?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;targetServerType=master
+user=postgres</p>
+<p>warehouses=10
+terminals=32
+runMins=60
+limitTxnsPerMin=100000</p>
+<p>Running Average tpmTOTAL: 7846.76    Current tpmTOTAL: 3115428    Memory Usage: 44MB / 83MB</p>
+<p>Measured tpmC (NewOrders) = 3519.94
+Measured tpmTOTAL = 7846.88
+Session Start     = 2020-11-30 11:40:57
+Session End       = 2020-11-30 12:40:57
+Transaction Count = 470833</p>
+</blockquote>
+<p><strong>Result Summary</strong></p>
+<table width="1100px" border="2">
+    <tr>
+      <th rowspan="2" width="16%"><b>Transaction<br/>Type</b></th>
+      <th colspan="2" width="24%"><b>Latency</b></th>
+      <th rowspan="2" width="12%"><b>Count</b></th>
+      <th rowspan="2" width="12%"><b>Percent</b></th>
+      <th rowspan="2" width="12%"><b>Rollback</b></th>
+      <th rowspan="2" width="12%"><b>Errors</b></th>
+      <th rowspan="2" width="12%"><b>Skipped<br/>Deliveries</b></th>
+    </tr>
+    <tr>
+      <th width="12%"><b>90th&nbsp;%</b></th>
+      <th width="12%"><b>Maximum</b></th>
+    </tr>
+    <tr>
+      <td align="left">NEW_ORDER</td>
+      <td align="right">0.576s</td>
+      <td align="right">13.890s</td>
+      <td align="right">211206</td>
+      <td align="right">44.858%</td>
+      <td align="right">1.008%</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">PAYMENT</td>
+      <td align="right">0.429s</td>
+      <td align="right">14.443s</td>
+      <td align="right">203260</td>
+      <td align="right">43.170%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">ORDER_STATUS</td>
+      <td align="right">0.166s</td>
+      <td align="right">2.983s</td>
+      <td align="right">18754</td>
+      <td align="right">3.983%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">STOCK_LEVEL</td>
+      <td align="right">0.065s</td>
+      <td align="right">11.492s</td>
+      <td align="right">18946</td>
+      <td align="right">4.024%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">DELIVERY</td>
+      <td align="right">0.000s</td>
+      <td align="right">0.005s</td>
+      <td align="right">18667</td>
+      <td align="right">3.965%</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">N/A</td>
+    </tr>
+    <tr>
+      <td align="left">DELIVERY_BG</td>
+      <td align="right">1.344s</td>
+      <td align="right">16.202s</td>
+      <td align="right">18667</td>
+      <td align="right">N/A</td>
+      <td align="right">N/A</td>
+      <td align="right">0</td>
+      <td align="right">0</td>
+    </tr>
+    </table>
+<p><strong>TPM and TL</strong></p>
+<p><img src="./pressure-test/ha_t32_1h#1/tpm_nopm.png" alt="" /></p>
+<p><img src="./pressure-test/ha_t32_1h#1/latency.png" alt="" /></p>
+<h2><a class="header" href="#55-测试结论" id="55-测试结论">5.5 测试结论</a></h2>
+<blockquote>
+<ul>
+<li>故障转移测试
+<ul>
+<li><a href="#%E5%9C%BA%E6%99%AF%E4%B8%80">场景一</a>：验证任意一个节点故障，都能保证PG服务可用和数据安全，<strong>符合预期</strong>；</li>
+<li><a href="#%E5%9C%BA%E6%99%AF%E4%BA%8C">场景二</a>：验证了standby 故障，当可用 standby 节点数 &lt; number_sync_standbys 时 PG 服务将<strong>降级为只读</strong>，<strong>符合预期</strong>；验证了主节点和一个 standby 节点故障，不影响可用性，<strong>符合预期</strong>；</li>
+<li><a href="#%E5%9C%BA%E6%99%AF%E4%B8%89">场景三</a> 验证 Monitor 节点故障不影响 PG 服务，<strong>符合预期</strong>；</li>
+<li><a href="">Monitor 故障转移测试</a>验证了 Monitor SPOF 解决方案的功能可行，<strong>符合预期</strong>；</li>
+</ul>
+</li>
+<li>应用 JDBC 连接测试正常，<strong>符合预期</strong>；</li>
+<li>从基准测试结果的两组数据对比上看，HA 和单机连接单位时间内执行的事务数差距大概差距在8%-10%（这个差距依据测试模型中 newOrder 的数据得出），<strong>略大于预期的5%</strong>。</li>
+<li>压测中发现，大量的写操作会造成复制节点pg_wal 大量增长，磁盘压力增大，需要增对 pg_wal 参数进行调优。</li>
+</ul>
+</blockquote>
+<h1><a class="header" href="#6--应用" id="6--应用">6  应用</a></h1>
+<blockquote>
+<p>任何阶段的风险和不适用评估都会对下一阶段有决定性的影响。</p>
+</blockquote>
+<table><thead><tr><th>阶段</th><th>规模</th><th>目标</th><th>下个阶段</th><th>备注</th></tr></thead><tbody>
+<tr><td>DEV_READY</td><td>2个应用</td><td>failover 压测稳定运行 1周</td><td>DEV</td><td><strong>已稳定运行7天</strong></td></tr>
+<tr><td>DEV</td><td>全部应用</td><td>稳定运行 3周</td><td>TEST</td><td>/</td></tr>
+<tr><td>TEST</td><td>全部应用</td><td>稳定运行 3周</td><td>PROD_READY</td><td>/</td></tr>
+<tr><td>PROD_READY</td><td>符合业务规模的压力测试</td><td>稳定运行4周</td><td>PROD</td><td>/</td></tr>
+<tr><td>PROD</td><td>待定</td><td>/</td><td>/</td><td>/</td></tr>
+</tbody></table>
+<h1><a class="header" href="#7-总结" id="7-总结">7 总结</a></h1>
+<blockquote>
+<p>​		PG HA方案解决了目前生产上 PG 单点故障问题，实现 Postgres 服务和数据集的高可用性，在原有 pg-auto-failover 之上补充了 Monitor SPOF 的解决方案。整体方案在 DEV_READY 阶段做了完整测试和验证，包括：故障转移（压测）、JDBC 应用层接入、数据库基准、数据库压测，测试结果基本符合预期；数据基准测试性能上的差距主因是同步的流复制，流复制是主流 PG Active/Standby HA 方案的基础，这部分性能上的差距在类似方案上也是存在的；在验证和测试部分下个阶段可以更深入关注异步复制的影响、基准上参照可以考虑对比非 pg-auto-failover 中自动配置的流复制。</p>
+<p>​		整体上推荐方案进入下一阶段的使用和验证。</p>
+<p>​</p>
+</blockquote>
+<h1><a class="header" href="#附录" id="附录">附录</a></h1>
+<h2><a class="header" href="#a-hrefhttpspg-auto-failoverreadthedocsioenlatestarchitecturehtmlpg-auto-failover-glossarypg_auto_failover-glossarya" id="a-hrefhttpspg-auto-failoverreadthedocsioenlatestarchitecturehtmlpg-auto-failover-glossarypg_auto_failover-glossarya"><a href="https://pg-auto-failover.readthedocs.io/en/latest/architecture.html#pg-auto-failover-glossary">pg_auto_failover Glossary</a></a></h2>
+<table><thead><tr><th>概念</th><th>描述</th></tr></thead><tbody>
+<tr><td>Formation</td><td><strong>编队</strong>是一起管理的 PG 服务的逻辑集合。</td></tr>
+<tr><td>Monitor</td><td><strong>Monitor</strong> 是 pg-auto-failover 里的一个服务，用于跟踪一个或多个包含<strong>节点组</strong>的<strong>编队</strong>。Monitor 服务以一个 PG 扩展的方式实现，所以当创建 Monitor 服务时，将会初始化一个 PG 实例，并使用该扩展进行配置和启动。Monitor 服务时嵌入在 PG 实例里面的</td></tr>
+<tr><td>Group</td><td><strong>节点组</strong>， 一个<strong>节点组</strong>由 PG 主节点和具有一个或多个同步复制的 standby 节点组成，以 HA 的方式提供单个 PG 服务。</td></tr>
+<tr><td>Keeper</td><td><strong>Keeper</strong> 是 pg-auto-failover 的<strong>守护程序</strong>，必须在运行 PG 节点的服务器上运行。Keeper 控制本地的 PG 实例（通过 pg_ctl 命令和 SQL 查询），并与 <strong>Monitor</strong> 通信：<br/>      1、根据PG 的统计信息视图，发送本地节点的更新数据，例如服务器之间的 WAL 增量<br/>     2、从 Monitor 接受状态分配</td></tr>
+<tr><td>Node</td><td><strong>节点</strong>是运行 PG 实例和 <strong>Keeper</strong> 服务的服务器。</td></tr>
+<tr><td>State</td><td><strong>状态</strong>是每个实例和每个组情况的表示。</td></tr>
+</tbody></table>
+<h2><a class="header" href="#a-hrefhttpspg-auto-failoverreadthedocsioenlatestfailover-state-machinehtmlstate-referencefailover-state-referencea" id="a-hrefhttpspg-auto-failoverreadthedocsioenlatestfailover-state-machinehtmlstate-referencefailover-state-referencea"><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#state-reference">Failover State reference</a></a></h2>
+<img src="./assets/arch-Failover-State-Machine.svg" style="zoom:175%" />
+<table><thead><tr><th>状态</th><th>描述</th><th>场景</th></tr></thead><tbody>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#init">init</a></td><td>节点<strong>第一次</strong>向 Monitor <strong>注册</strong>时，被分配的状态；这时除了知道节点<strong>存在</strong>，并不知道节点的任何信息。</td><td>/</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#single">single</a></td><td><strong>只有一个节点</strong>时，或其他节点被删除时；此时相当于当个 PG 实例，没有 HA 和 failover的能力。</td><td>/</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#wait-primary">wait_primary</a></td><td>计划成为主节点（primary），但还未成为时；此时这个节点已知 standby 节点的信息（名称、IP），并允许 hot standby （复制连接）。</td><td>1、新的健康节点注册时 <br/>2、现有 Secondary 节点不健康时（这种情况下，从 priamry 到 wait_primary 这段时间内，同步复制和查询都会被限制）</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#join-primary">join_primary</a></td><td>当 standby 节点加入时，应用于主节点；此时主节点将修改HBA 设置，之后新的节点才能使用 pg_basebackup 命令。</td><td>/</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#primary">primary</a></td><td>当主节点存在一个健康的 standby 节点，并且 WAL 复制落后为0。</td><td>/</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#wait-standby">wait_standby</a></td><td>Monitor 判定为 standby 节点，此时等待主节点授权允许 hot standby（复制连接）。</td><td>/</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#catchingup">catching_up</a></td><td>主节点允许 hot standby（复制连接）时，standby 节点被分配的状态。</td><td>/</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#secondary">secondary</a></td><td>是主节点的 hot standby ，WAL 是最新的。</td><td>/</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#maintenance">maintenance</a></td><td>节点进入维护状态。</td><td>/</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#prepare-maintenance">prepare_maintenance</a></td><td>主节点进入维护状态前的中间状态，确保 standby 节点完成所有写确认。</td><td>/</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#wait-maintenance">wait-maintenance</a></td><td>standby 节点进入维护状态前的中间状态；为了确保写不会被阻塞，节点会被切换到异步复制。</td><td>/</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#draining">draining</a></td><td>primary 和 demoted 之间的中间状态，等待复制缓冲区完成刷新；此时节点将不会接受新的写请求。</td><td>主节点故障时，被降级</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#demoted">demoted</a></td><td>主节点处于降级状态，PG 实例将会被停止。</td><td></td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#demote-timeout">demote-timeout</a></td><td>主节点被 Monitor 分配 demoted 状态，但主节点上的 keeper 服务未在超时窗口内进行确认收到，此时Monitor 会分配 demote-timeout 给主节点。</td><td>主节点突然断电或关机了，被降级，keeper 服务未报告状态。</td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#stop-replication">stop-replication</a></td><td>stop-replication 状态确保在故障转移时，主数据库先进入 demoted（降级）状态， standby 才变为单个数据库（可写）。</td><td></td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#prepare-promotion">prepare-promotion</a></td><td>prepare_promotion 状态用于准备将 standby 服务器升级。</td><td></td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#report-lsn">report-lsn</a></td><td>当故障转移时，存在多个 standby 节点时，将report_lsn 状态分配给 standby 节点；Monitor 将会选择偏移最大 LSN 作为新的主节点，所以所有 standby 会先报告最新的 LSN。</td><td></td></tr>
+<tr><td><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#fast-forward">fast-forward</a></td><td>故障转移时，当一个 standby 节点被选为主节点是因为 candidate-priority 配置（比其它节点的大），而不是因为它的 LSN 偏移最大，此时节点会被分配 fast_forward 状态，由此节点会利用 PG 级联复制功能，从最大 LSN  standby 节点获取丢失的 WAL。</td><td></td></tr>
+</tbody></table>
+<h2><a class="header" href="#a-hrefhttpspg-auto-failoverreadthedocsioenlatestfailover-state-machinehtmlfailover-logicfailover-logica" id="a-hrefhttpspg-auto-failoverreadthedocsioenlatestfailover-state-machinehtmlfailover-logicfailover-logica"><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html#failover-logic">Failover logic</a></a></h2>
+<h3><a class="header" href="#node-state-machine" id="node-state-machine">Node state machine</a></h3>
+<p><img src="./assets/arch-auto-HA-node-states.svg" alt="" /></p>
+<h3><a class="header" href="#group-state-machine" id="group-state-machine">Group state machine</a></h3>
+<p><img src="./assets/arch-auto-HA-group-states.svg" alt="" /></p>
+<h1><a class="header" href="#fqa" id="fqa">FQA</a></h1>
+<p><a href="https://zhuanlan.zhihu.com/p/166218704">pg_wal 文件膨胀</a></p>
+<p><a href="http://www.postgres.cn/docs/10/wal-configuration.html">wal configuration</a></p>
+<p><a href="http://www.postgres.cn/news/viewone/1/273">如何遏制PostgreSQL WAL的疯狂增长</a></p>
+<p>虚拟机下使用 huge_page 重启后，huge_page失效，PG会重启失败</p>
+<p><a href="https://www.modb.pro/db/14150">PostgreSQL数据库Linux内核参数调优</a></p>
+<p><a href="http://www.pgsql.tech/project_300_10000084">PostgreSQL优化之Linux 内核参数调优</a></p>
+<p><a href="http://citusdb.cn/?p=1076">pg-auto-failover 介绍</a></p>
+<p><a href="https://github.com/citusdata/pg_auto_failover">pg-auto-failover source code</a></p>
+<p><a href="https://pg-auto-failover.readthedocs.io/en/latest/install.html">install pg-auto-failover</a></p>
+<p><a href="https://pg-auto-failover.readthedocs.io/en/latest/tutorial.html">pg-auto-failover docs</a></p>
+<p><a href="https://pg-auto-failover.readthedocs.io/en/latest/architecture.html#pg-auto-failover-glossary">pg-auto-failover glossary</a></p>
+<p><a href="https://pg-auto-failover.readthedocs.io/en/latest/failover-state-machine.html">pg-auto-failover: failover state machine</a></p>
+<p><a href="https://pg-auto-failover.readthedocs.io/en/latest/architecture.html#synchronous-vs-asynchronous-replication">pg-auto-failover : number_sync_standby</a></p>
+<p><a href="https://pg-auto-failover.readthedocs.io/en/latest/architecture.html#client-side-ha">pg-auto-failover : Client Side HA</a></p>
+<p><a href="https://pg-auto-failover.readthedocs.io/en/latest/ref/configuration.html">pg-auto-failover configuration</a></p>
+<p><a href="https://pg-auto-failover.readthedocs.io/en/latest/architecture-multi-standby.html?#number-sync-standbys">Set Number Sync Standbys</a></p>
+<p><a href="https://jdbc.postgresql.org/documentation/head/connect.html#connection-parameters">postgres jdbc connection parameters</a></p>
+<p><a href="https://pg-auto-failover.readthedocs.io/en/latest/faq.html#the-monitor-is-a-spof-in-pg-auto-failover-design-how-should-we-handle-that">the monitor is a spof in pg-auto-failover design how should we handle that</a></p>
+<p><a href="https://help.aliyun.com/document_detail/173284.html">自动故障转移和读写分离</a></p>
+<p><a href="https://developer.aliyun.com/article/73930">读写分离</a></p>
+<p><a href="https://sourceforge.net/projects/benchmarksql/">测试工具：BenchMarkSQL</a> | <a href="https://support.huaweicloud.com/tstg-kunpengdbs/kunpengbenchmarksql_06_0002.html">使用方法</a></p>
+<p><a href="https://pgpool.net/mediawiki/index.php/Main_Page">Pgpool-II</a></p>
+<p><a href="https://patroni.readthedocs.io/en/latest/">Patroni</a></p>
+<p><a href="https://repmgr.org/">Repmgr</a></p>
+<p><a href="https://www.postgresql.org/docs/10/warm-standby-failover.html">PostgreSQL Failover、Warm Standby</a> </p>
+<p><a href="https://jdbc.postgresql.org/documentation/head/connect.html#connection-parameters">PostgreSQl Connection parameters</a></p>
+<p><a href="https://www.postgresql.org/docs/10/kernel-resources.html">Postgres Kernel Resources</a></p>
+<p><a href="https://baike.baidu.com/item/%E5%8D%95%E7%82%B9%E6%95%85%E9%9A%9C/3570893">SPOF</a>: 单点故障 (single point of failure)</p>
+<p><a href="https://www.cnblogs.com/kevingrace/p/6248941.html">Keepalived 原理和 VRRP 协议</a></p>
+<p><a href="https://my.oschina.net/u/4262664/blog/3326804">Keepalived VIP 切换配置</a></p>
+<p><a href="https://keepalived-doc.readthedocs.io/zh_CN/latest/%E6%9C%AF%E8%AF%AD.html">keepalived-doc</a></p>
+<p><a href="https://cloud.tencent.com/developer/article/1496311">Linux 逻辑卷创建、挂载</a></p>
+<p><a href="https://blog.csdn.net/meanshe/article/details/52065873">yum rpm 缓存路径</a> | <a href="https://www.jianshu.com/p/a295d7b1e3b3">yum 缓存配置</a></p>
+<p><a href="https://blog.csdn.net/msdnchina/article/details/81167888">BenchmarkSQL  推荐配置</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../../SUMMARY.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../../tech/project/kubesphere/基于Linux安装kubesphere3多节点集群(prod).html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../../SUMMARY.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../../tech/project/kubesphere/基于Linux安装kubesphere3多节点集群(prod).html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

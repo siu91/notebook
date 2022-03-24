@@ -1,0 +1,494 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Doris Remote UDF 的开发和测试 - Siu 的笔记本</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../SUMMARY.html"><strong aria-hidden="true">1.</strong> 架构和设计</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../tech/project/PGHA/pg-ha-solution.html"><strong aria-hidden="true">1.1.</strong> PG HA 方案</a></li><li class="chapter-item expanded "><a href="../../../tech/project/kubesphere/基于Linux安装kubesphere3多节点集群(prod).html"><strong aria-hidden="true">1.2.</strong> KuberSphere 生产部署方案</a></li><li class="chapter-item expanded "><a href="../../../tech/project/lwpoc/lwpoc/架构/构建实时湖仓.html"><strong aria-hidden="true">1.3.</strong> 构建实时湖仓</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/index.html"><strong aria-hidden="true">1.4.</strong> CICD 设计</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/CICD架构.html"><strong aria-hidden="true">1.4.1.</strong> CI/CD 架构</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/Jenkins_Cluster.html"><strong aria-hidden="true">1.4.2.</strong> Jenkins 集群</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/多分支流水线设计.html"><strong aria-hidden="true">1.4.3.</strong> 多分支流水线设计</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/cec-jpl设计.html"><strong aria-hidden="true">1.4.4.</strong> cec-jpl 设计</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/数据库自动化.html"><strong aria-hidden="true">1.4.5.</strong> 数据库自动化</a></li><li class="chapter-item expanded "><a href="../../../tech/project/cicd/design/账号体系.html"><strong aria-hidden="true">1.4.6.</strong> 账号体系</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../../SUMMARY.html"><strong aria-hidden="true">2.</strong> 最佳实践</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../tech/bestpractices/sql性能测试工具的设计.html"><strong aria-hidden="true">2.1.</strong> sql 性能测试工具的设计</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/jrudf/doris-remote-udf.html" class="active"><strong aria-hidden="true">2.2.</strong> Doris Remote UDF 的开发和测试</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/禅道工作流.html"><strong aria-hidden="true">2.3.</strong> 禅道工作流</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/单元测试规范.html"><strong aria-hidden="true">2.4.</strong> 单元测试规范</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/数据库自动化-Flyway使用规范.html"><strong aria-hidden="true">2.5.</strong> 数据库自动化：Flyway</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/语义化版本控制规范.html"><strong aria-hidden="true">2.6.</strong> 语义化版本</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/API设计规范.html"><strong aria-hidden="true">2.7.</strong> API设计规范</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/git-collaborative-development-tutorials/git协同开发指南.html"><strong aria-hidden="true">2.8.</strong> git 协同开发指南</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/code-review-guide-baseon-gitlab.html"><strong aria-hidden="true">2.9.</strong> Gitlab Code Review 指南</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/gitlab-issue-workflow.html"><strong aria-hidden="true">2.10.</strong> Gitlab Issue 工作流</a></li><li class="chapter-item expanded "><a href="../../../tech/bestpractices/Python编码规范.html"><strong aria-hidden="true">2.11.</strong> Python 编码规范</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Siu 的笔记本</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#doris--remote-udf-的开发和测试" id="doris--remote-udf-的开发和测试">Doris  Remote UDF 的开发和测试</a></h1>
+<blockquote>
+<p>By <a href="">Siu</a> 2021/3/15</p>
+</blockquote>
+<h2><a class="header" href="#remote-udf-介绍" id="remote-udf-介绍">Remote UDF 介绍</a></h2>
+<blockquote>
+<p>以下参考官方的文档：</p>
+<p>Remote UDF Service 支持通过 RPC 的方式访问用户提供的 UDF Service，以实现用户自定义函数的执行。相比于 Native 的 UDF 实现，Remote UDF Service 有如下优势和限制：</p>
+<p>优势</p>
+<ul>
+<li>跨语言：可以用 Protobuf 支持的各类语言编写 UDF Service。</li>
+<li>安全：UDF 执行失败或崩溃，仅会影响 UDF Service 自身，而不会导致 Doris 进程崩溃。</li>
+<li>灵活：UDF Service 中可以调用任意其他服务或程序库类，以满足更多样的业务需求。</li>
+</ul>
+<p>使用限制</p>
+<ul>
+<li>性能：相比于 Native UDF，UDF Service 会带来额外的网络开销，因此性能会远低于 Native UDF。同时，UDF Service 自身的实现也会影响函数的执行效率，用户需要自行处理高并发、线程安全等问题。</li>
+<li>单行模式和批处理模式：Doris 原先的的基于行存的查询执行框架会对每一行数据执行一次 UDF RPC 调用，因此执行效率非常差，而在新的向量化执行框架下，会对每一批数据（默认2048行）执行一次 UDF RPC 调用，因此性能有明显提升。实际测试中，基于向量化和批处理方式的 Remote UDF 性能和基于行存的 Native UDF 性能相当，可供参考</li>
+</ul>
+</blockquote>
+<p><strong>所以， Doris Remote UDF 开发，其实就是开发一个 RPC 服务，以 RPC 访问的方式提供 UDF 服务。</strong></p>
+<h2><a class="header" href="#remote-udf-开发" id="remote-udf-开发">Remote UDF 开发</a></h2>
+<blockquote>
+<p>主要是 RPC Server 部分的开发。</p>
+</blockquote>
+<h3><a class="header" href="#设计" id="设计">设计</a></h3>
+<p><img src="assets/arch.svg" alt="" /></p>
+<h3><a class="header" href="#开发coding" id="开发coding">开发（coding）</a></h3>
+<h4><a class="header" href="#编译-proto" id="编译-proto">编译 proto</a></h4>
+<p><em><strong>需要安装 protoc 环境</strong></em></p>
+<p>从官方 proto file进行编译，当前已经编译放在 <code>libs/doris-rudf-grpclib.jar</code></p>
+<h4><a class="header" href="#代码结构" id="代码结构">代码结构</a></h4>
+<pre><code class="language-shell">.
+├── libs
+│   └── doris-rudf-grpclib.jar # proto 编译的包，作为 local lib
+├── proto # 原始 proto 文件
+│   ├── function_service.proto
+│   └── types.proto
+├── src
+│   └── main
+│       ├── java
+│       │   ├── com
+│       │   │   └── siu
+│       │   │       └── udf
+│       │   │           └── SubFunction.java # 实现 IFunction，会以 SPI 的方式注册到 Functions 
+│       │   └── org
+│       │       └── apache
+│       │           └── doris
+│       │               └── udf
+│       │                   ├── Main.java # 入口
+│       │                   ├── func
+│       │                   │   ├── Functions.java # 单例，以SPI 方式加载 UDF
+│       │                   │   └── IFunction.java # 函数接口定义，需要实现 call(),check(),getName()
+│       │                   └── server
+│       │                       ├── FunctionServiceImpl.java # Doris Remote UDF 定义的接口，这里需要实现 checkFn(), callFn(),handShake()
+│       │                       └── RpcServer.java
+│       └── resources
+│           └── META-INF
+│               └── services
+│                   └── org.apache.doris.udf.func.IFunction # SPI 定义文件
+└── target # target code
+</code></pre>
+<h4><a class="header" href="#编译和运行" id="编译和运行">编译和运行</a></h4>
+<pre><code class="language-shell"># 编译
+mvn package
+</code></pre>
+<pre><code class="language-shell"># 运行
+java -jar jrudf-jar-with-dependencies.jar 9000
+</code></pre>
+<p><code>9000</code> 是默认端口，可以不传</p>
+<h3><a class="header" href="#调试debug" id="调试debug">调试（debug）</a></h3>
+<blockquote>
+<p>推荐远程调试，在 Remote UDF 场景中远程调试是最有效的，因为整体上还要依赖一个 Doris 的调试环境，所以远程调试的方式是一个全流程的验证。如果用支持grpc proto file 的工具调试只有 rpc server 部分的调试，不能完整的测试功能。</p>
+</blockquote>
+<h4><a class="header" href="#proto-file-调试" id="proto-file-调试">proto file 调试</a></h4>
+<ul>
+<li>Postman ：最新版本支持 GRPC，可以通过界面去调试比较友好</li>
+<li>BloomRPC ：很适合 GRPC 的界面调试工具</li>
+<li>Evans ：一个 RPC 命令行调试工具</li>
+</ul>
+<h4><a class="header" href="#swagger-调试" id="swagger-调试">Swagger 调试</a></h4>
+<ul>
+<li>
+<p>使用 <a href="https://github.com/grpc-swagger/grpc-swagger">grpc-swagger</a> 这个项目:</p>
+<pre><code class="language-shell">java -jar grpc-swagger-web/target/grpc-swagger.jar --server.port=8888
+</code></pre>
+</li>
+<li>
+<p>在 RPC Server 中开启反射模式：</p>
+<pre><code class="language-java">            server = ServerBuilder.forPort(port)
+                    .addService(... some server)
+                    .addService(ProtoReflectionService.newInstance()) // 反射模式，可以把这块代码用 debug 控制 
+                    .build()
+                    .start();
+</code></pre>
+</li>
+<li>
+<p>打开 Swagger</p>
+<p><img src="./assets/grpc-swagger.png" alt="" /></p>
+</li>
+</ul>
+<h4><a class="header" href="#idea-远程调试" id="idea-远程调试">IDEA 远程调试</a></h4>
+<p>远程服务器上启动服务</p>
+<pre><code class="language-shell">java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=[ip]:5005 -jar jrudf-jar-with-dependencies.jar
+# 后台运行
+nohup java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=[ip]:5005 -jar jrudf-jar-with-dependencies.jar &gt;jrudf.log 2&gt;&amp;1 &amp;
+</code></pre>
+<p>本地 IDEA 添加 Remote 配置:
+<code>Edit Configurtions-&gt; Add New Configrution-&gt;Remote JVM Debug</code></p>
+<img src="assets/idea-remote-debug.png" alt="idea-remote-debug" style="zoom:50%;" />
+<h2><a class="header" href="#remote-udf-测试" id="remote-udf-测试">Remote UDF 测试</a></h2>
+<blockquote>
+<p>由于当前版本不支持 remote UDF ，所以采用主干分支的编译版本，编译方式参考附录中的文档《编译 Doris》。</p>
+</blockquote>
+<h3><a class="header" href="#功能测试" id="功能测试">功能测试</a></h3>
+<h4><a class="header" href="#在-doris-上创建-udf" id="在-doris-上创建-udf">在 Doris 上创建 UDF</a></h4>
+<p>目前暂不支持 UDAF 和 UDTF</p>
+<pre><code class="language-sql">CREATE FUNCTION
+name ([,...])
+[RETURNS] rettype
+PROPERTIES ([&quot;key&quot;=&quot;value&quot;][,...])
+</code></pre>
+<p>说明：</p>
+<pre><code class="language-txt">PROPERTIES中symbol表示的是 rpc 调用传递的方法名，这个参数是必须设定的。
+PROPERTIES中object_file表示的 rpc 服务地址，目前支持单个地址和 brpc 兼容格式的集群地址，集群连接方式 参考 格式说明 (opens new window)。
+PROPERTIES中type表示的 UDF 调用类型，默认为 Native，使用 Rpc UDF时传 RPC。
+name: 一个function是要归属于某个DB的，name的形式为dbName.funcName。当dbName没有明确指定的时候，就是使用当前session所在的db作为dbName。
+
+</code></pre>
+<p><em><strong>注：特别说明，PROPERTIES.symbol 和 name 强制一致，发现在 set enable_vectorized_engine=true 调用传的函数名是 name，false 时传 symbol</strong></em></p>
+<p>示例：</p>
+<pre><code class="language-sql">CREATE FUNCTION rpc_add(INT, INT) RETURNS INT PROPERTIES (
+&quot;SYMBOL&quot;=&quot;add_int&quot;,
+&quot;OBJECT_FILE&quot;=&quot;127.0.0.1:9000&quot;,
+&quot;TYPE&quot;=&quot;RPC&quot;
+);
+</code></pre>
+<h4><a class="header" href="#使用-udf" id="使用-udf">使用 UDF</a></h4>
+<p>用户使用 UDF 必须拥有对应数据库的 SELECT 权限。</p>
+<p>UDF 的使用与普通的函数方式一致，唯一的区别在于，内置函数的作用域是全局的，而 UDF 的作用域是 DB内部。当链接 session 位于数据内部时，直接使用 UDF 名字会在当前DB内部查找对应的 UDF。否则用户需要显示的指定 UDF 的数据库名字，例如 dbName.funcName。</p>
+<h4><a class="header" href="#删除-udf" id="删除-udf">删除 UDF</a></h4>
+<p>当你不再需要 UDF 函数时，你可以通过下述命令来删除一个 UDF 函数, 可以参考 DROP FUNCTION</p>
+<p><em><strong>注：测试结论一并在性能测试部分说明</strong></em></p>
+<h3><a class="header" href="#性能测试" id="性能测试">性能测试</a></h3>
+<h4><a class="header" href="#测试模型" id="测试模型">测试模型</a></h4>
+<blockquote>
+<h4><a class="header" href="#说明" id="说明">说明</a></h4>
+<p>Native UDF 在性能上有天然的优势，所以比较性能时，需要开启 Doris 的向量化引擎才有比较的意义，这里只是简单的设计几个对照组，每组执行10次查询，分别为：</p>
+<ul>
+<li>Build-in Function（<code>lenght()</code>）</li>
+<li>Native UDF</li>
+<li>Remote UDF 1 （enable_vectorized_engine = false） <em><strong>这一组测试无法完成</strong></em></li>
+<li>Remote UDF 2（enable_vectorized_engine = true，batch_size = 1024）</li>
+<li>Remote UDF 3（enable_vectorized_engine = true，batch_size = 2048）</li>
+<li>Remote UDF 4（enable_vectorized_engine = true，batch_size = 4096）</li>
+<li>Remote UDF 5（enable_vectorized_engine = true，batch_size = 8192）</li>
+</ul>
+<p><em><strong>函数逻辑：UDF 的实现逻辑 str.length()</strong></em>，内置函数选取 <code>length()</code> 进行比较</p>
+<p>测试工具：mysqlslqp</p>
+<p>测试数据：使用 Doris SSB 中的 Customer 表，150 万</p>
+<p>测试环境：3 be 32G/8C，RPC Server JVM 默认</p>
+<p>Doris 版本：
+​	branch master
+​	latest commit <a href="https://github.com/apache/incubator-doris/commit/f4663ad2eb3fc8ce929304ccdea09d87bb86ec8a"><code>f4663ad</code></a>
+​	Compiled from the official docker image</p>
+</blockquote>
+<h4><a class="header" href="#测试结果" id="测试结果">测试结果</a></h4>
+<p>单节点的 rpc server 下得出如下测试数据：</p>
+<pre><code class="language-shell">##########################################################################
+全局参数：
+client_num=10
+queries_num=10
+测试结果： 
+test_name        mode   avg    min    max    client_num  queries_per_client
+build-in         mixed  1.784  1.669  1.856  10          1
+n-udf-f          mixed  1.865  1.791  1.957  10          1
+r-udf-2-t-1024   mixed  3.609  3.388  3.787  10          1
+r-udf-3-t-2048   mixed  3.032  2.748  3.775  10          1
+r-udf-4-t-4096   mixed  2.506  2.347  2.942  10          1
+r-udf-5-t-8192   mixed  2.178  2.059  2.374  10          1
+r-udf-6-t-16384  mixed  1.971  1.848  2.271  10          1
+#########################################################################
+</code></pre>
+<p>在 3 个节点的 rpc server 下得出如下测试数据：</p>
+<pre><code class="language-shell">##########################################################################
+全局参数：
+client_num=10
+queries_num=10
+测试结果： 
+test_name        mode   avg    min    max    client_num  queries_per_client
+build-in         mixed  1.683  1.252  1.923  10          1
+n-udf-f          mixed  1.797  1.694  1.912  10          1
+r-udf-2-t-1024   mixed  2.384  1.882  3.388  10          1
+r-udf-3-t-2048   mixed  1.688  1.479  1.886  10          1
+r-udf-4-t-4096   mixed  1.455  1.374  1.615  10          1
+r-udf-5-t-8192   mixed  1.358  1.272  1.436  10          1
+r-udf-6-t-16384  mixed  1.329  1.265  1.474  10          1
+#########################################################################
+</code></pre>
+<h4><a class="header" href="#测试结论" id="测试结论">测试结论</a></h4>
+<ol>
+<li>Native UDF 与内置函数的<strong>性能基本一致</strong></li>
+<li>在非向量化引擎的环境下（enable_vectorized_engine = false），Remote UDF 性能<strong>极差</strong></li>
+<li>在向量化引擎的环境下（enable_vectorized_engine = true），Native UDF <strong>无法使用</strong></li>
+<li><strong>推荐</strong>使用配置 enable_vectorized_engine = true，batch_size = 4096 （实际做了几十次验证，这个配置是最稳定的）</li>
+<li>在 <strong>4</strong> 推荐配置下，单节点 rpc server 时，Remote UDF 与 Native UDF <strong>性能差距大概有 35%</strong></li>
+<li>在 <strong>4</strong> 推荐配置下，3 节点 rpc server 时，Remote UDF 与 Native UDF <strong>性能领先大概有 36%</strong>（此时 Doris 没有明显瓶颈，目前没有准确的数据去描述节点数量对于Remote UDF 性能的线性影响有多大，不排除在更高规格下 Native UDF 可能表现更佳）
+<ul>
+<li>这个结论符合官方的描述<code>基于向量化和批处理方式的 Remote UDF 性能和基于行存的 Native UDF 性能相当</code></li>
+</ul>
+</li>
+<li>不排除处理复杂的自定义函数时 Remote UDF 性能表现会下降，特别是有大量数据要通过网络传输时，推荐配置也会随场景不同有所不同</li>
+</ol>
+<h2><a class="header" href="#总结" id="总结">总结</a></h2>
+<p><strong>从整体方案上做一下总结和对比：</strong></p>
+<table><thead><tr><th></th><th>Native UDF</th><th>Remote UDF</th></tr></thead><tbody>
+<tr><td>用户</td><td>使用方式上与内置函数一致的体验</td><td>使用方式上与内置函数一致的体验</td></tr>
+<tr><td>社区</td><td>当前版本支持</td><td><strong>预计下一个版本支持；这个对稳定性、安全也有较大的影响，当前功能验证是基于主干版本编译的</strong></td></tr>
+<tr><td>功能</td><td>满足</td><td>满足（<em><strong>当前版本不支持</strong></em>）</td></tr>
+<tr><td>稳定性</td><td>需要代码来保证</td><td>需要代码来保证（<em><strong>当前版本不支持，编译版本可能会引入不稳定因素</strong></em>）</td></tr>
+<tr><td>性能</td><td>多数情况下会好于 Remote UDF</td><td>在向量化和批处理模式下性能与 Native 相当；具备一定的伸缩能力</td></tr>
+<tr><td>安全</td><td>不可靠的程序，会直接影响 Doris</td><td>相对更安全；特别是使用 VM 的语言</td></tr>
+<tr><td>开发和维护</td><td>相对成本<strong>高</strong>：<br>1、C 系技术栈能力当前团队储备不足，长期来看无投入计划<br>2、C 系语言的程序编写、debug、优化、review 等心智成本较高<br>3、在处理复杂的自定义逻辑时，<strong>2</strong> 的挑战会放大（本身编码的经验；类库的缺乏， Java ，Python 对数据处理相对友好）</td><td>相对成本<strong>低</strong>：<br/>跨语言，类库多；一次性的投入，定义好开发范式，可以长期收益</td></tr>
+</tbody></table>
+<p>在不考虑团队技能情况下，选择 Native UDF 的方案是比较合适的，功能上满足，性能相对更稳定；Remote UDF 现阶段社区的版本不支持，是一个比较大的问题，编译是一个，主要还是非 release 版本的<strong>稳定性</strong>和<strong>安全</strong>是一个比较大的挑战。</p>
+<p>所以所有方案到最后都不是讨论好不好的问题，而是合不合适的问题。</p>
+<p>综合考虑功能、稳定性是我们迫切的需求，性能上都有基本同等级别的实现方式：现阶段使用 Native UDF 去支持需求；长期来看，待社区版本稳定支持 Remote UDF 时，定义好开发范式，用当前团队熟悉的技术栈来开发 UDF RPC Server 来迁移当前的需求。</p>
+<h1><a class="header" href="#附录" id="附录">附录</a></h1>
+<h2><a class="header" href="#编译-doris" id="编译-doris">编译 Doris</a></h2>
+<p><em><strong>由于当前版本（0.15）不支持 Remote UDF，所以编译 Doris 最新版本进行功能验证</strong></em></p>
+<h3><a class="header" href="#安装-docker-环境-略" id="安装-docker-环境-略">安装 Docker 环境 （略）</a></h3>
+<p><em><strong>推荐使用 Docker 集成的编译环境去进行 Doris 编译</strong></em></p>
+<h3><a class="header" href="#下载编译集成环境镜像" id="下载编译集成环境镜像">下载编译集成环境镜像</a></h3>
+<pre><code class="language-shell">docker pull apache/incubator-doris:build-env-ldb-toolchain-latest
+</code></pre>
+<h3><a class="header" href="#下载-doris-源码" id="下载-doris-源码">下载 Doris 源码</a></h3>
+<pre><code class="language-shell">mkdir -p /opt/doris &amp;&amp; cd /opt/doris
+git clone https://github.com/apache/incubator-doris.git
+</code></pre>
+<h3><a class="header" href="#运行编译集成环境" id="运行编译集成环境">运行编译集成环境</a></h3>
+<pre><code class="language-shell">docker run -it -v /root/.m2:/root/.m2 -v /opt/doris/incubator-doris/:/root/incubator-doris/ apache/incubator-doris:build-env-ldb-toolchain-latest
+</code></pre>
+<h3><a class="header" href="#编译" id="编译">编译</a></h3>
+<pre><code class="language-shell">cd /root/incubator-doris/
+sh build.sh --clean --be --fe --ui
+</code></pre>
+<h3><a class="header" href="#打包构建" id="打包构建">打包构建</a></h3>
+<pre><code class="language-shell">tar zcvf apache-doris-latest-454b45b-incubating.tar.gz ./output
+</code></pre>
+<p><em><strong>454b45b 是源码的 commit hash id</strong></em></p>
+<h2><a class="header" href="#问题" id="问题">问题</a></h2>
+<ul>
+<li>proto 编译要修改官方的 pom文件中 <code>protoc</code> 环境的位置</li>
+</ul>
+<pre><code class="language-xml">&lt;protocCommand&gt;${doris.thirdparty}/installed/bin/protoc&lt;/protocComm&gt; &lt;!-- 修改成 protoc 的安装位置 --&gt;
+</code></pre>
+<ul>
+<li>
+<p>Doris 源码编译时 gcc  找不到，版本不对</p>
+<p>需要 which 一下看看 gcc 的位置，在 <code>env.sh</code> 中设置一下 <code>${DORIS_GCC_HOME}</code></p>
+</li>
+</ul>
+<h2><a class="header" href="#ref" id="ref">ref</a></h2>
+<ul>
+<li><a href="https://doris.apache.org/zh-CN/extending-doris/udf/remote-user-defined-function.html">Doris Remote UDF</a></li>
+<li><a href="https://doris.apache.org/zh-CN/installing/compilation.html#%E4%BD%BF%E7%94%A8-docker-%E5%BC%80%E5%8F%91%E9%95%9C%E5%83%8F%E7%BC%96%E8%AF%91-%E6%8E%A8%E8%8D%90">Doris 编译</a></li>
+<li><a href="https://dev.mysql.com/doc/refman/8.0/en/mysqlslap.html">mysqlslap</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../../tech/bestpractices/sql性能测试工具的设计.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../../tech/bestpractices/禅道工作流.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../../tech/bestpractices/sql性能测试工具的设计.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../../tech/bestpractices/禅道工作流.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

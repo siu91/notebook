@@ -1,0 +1,202 @@
+# # Global variables are applied to all deployments and used as the default value of
+# # the deployments if a specific deployment value is missing.
+global:
+  user: "tidb"
+  ssh_port: 22
+  deploy_dir: "/tidb-deploy"
+  data_dir: "/tidb-data"
+
+# # Monitored variables are applied to all the machines.
+monitored:
+  node_exporter_port: 9100
+  blackbox_exporter_port: 9115
+  # deploy_dir: "/tidb-deploy/monitored-9100"
+  # data_dir: "/tidb-data/monitored-9100"
+  # log_dir: "/tidb-deploy/monitored-9100/log"
+
+# # Server configs are used to specify the runtime configuration of TiDB components.
+# # All configuration items can be found in TiDB docs:
+# # - TiDB: https://pingcap.com/docs/stable/reference/configuration/tidb-server/configuration-file/
+# # - TiKV: https://pingcap.com/docs/stable/reference/configuration/tikv-server/configuration-file/
+# # - PD: https://pingcap.com/docs/stable/reference/configuration/pd-server/configuration-file/
+# # All configuration items use points to represent the hierarchy, e.g:
+# #   readpool.storage.use-unified-pool
+# #
+# # You can overwrite this configuration via the instance-level `config` field.
+
+server_configs:
+  tidb:
+    log.slow-threshold: 300
+    binlog.enable: false
+    binlog.ignore-error: false
+  tikv:
+    # server.grpc-concurrency: 4
+    # raftstore.apply-pool-size: 2
+    # raftstore.store-pool-size: 2
+    # rocksdb.max-sub-compactions: 1
+    # storage.block-cache.capacity: "16GB"
+    # readpool.unified.max-thread-count: 12
+    readpool.storage.use-unified-pool: false
+    readpool.coprocessor.use-unified-pool: true
+  pd:
+    schedule.leader-schedule-limit: 4
+    schedule.region-schedule-limit: 2048
+    schedule.replica-schedule-limit: 64
+
+# 把 tc-* 改成实际 IP
+pd_servers:
+  - host: tc-pd-01
+    # ssh_port: 22
+    # name: "pd-1"
+    # client_port: 2379
+    # peer_port: 2380
+    # deploy_dir: "/tidb-deploy/pd-2379"
+    # data_dir: "/tidb-data/pd-2379"
+    # log_dir: "/tidb-deploy/pd-2379/log"
+    # numa_node: "0,1"
+    # # The following configs are used to overwrite the `server_configs.pd` values.
+    # config:
+    #   schedule.max-merge-region-size: 20
+    #   schedule.max-merge-region-keys: 200000
+  - host: tc-pd-02
+  - host: tc-pd-03
+
+tidb_servers:
+  - host: tc-tidb-01
+    # ssh_port: 22
+    # port: 4000
+    # status_port: 10080
+    # deploy_dir: "/tidb-deploy/tidb-4000"
+    # log_dir: "/tidb-deploy/tidb-4000/log"
+    # numa_node: "0,1"
+    # # The following configs are used to overwrite the `server_configs.tidb` values.
+    # config:
+    #   log.slow-query-file: tidb-slow-overwrited.log
+  - host: tc-tidb-02
+
+tikv_servers:
+  - host: tc-tikv-01
+    # ssh_port: 22
+    # port: 20160
+    # status_port: 20180
+    # deploy_dir: "/tidb-deploy/tikv-20160"
+    # data_dir: "/tidb-data/tikv-20160"
+    # log_dir: "/tidb-deploy/tikv-20160/log"
+    # numa_node: "0,1"
+    # # The following configs are used to overwrite the `server_configs.tikv` values.
+    # config:
+    #   server.grpc-concurrency: 4
+    #   server.labels: { zone: "zone1", dc: "dc1", host: "host1" }
+  - host: tc-tikv-02
+  - host: tc-tikv-03
+  - host: tc-tikv-04
+  - host: tc-tikv-05
+  - host: tc-tikv-06
+
+tiflash_servers:
+  - host: tc-tiflash-01
+    # ssh_port: 22
+    # tcp_port: 9000
+    # http_port: 8123
+    # flash_service_port: 3930
+    # flash_proxy_port: 20170
+    # flash_proxy_status_port: 20292
+    # metrics_port: 8234
+    # deploy_dir: /tidb-deploy/tiflash-9000
+    ## The `data_dir` will be overwritten if you define `storage.main.dir` configurations in the `config` section.
+    # data_dir: /tidb-data/tiflash-9000
+    # numa_node: "0,1"
+    # # The following configs are used to overwrite the `server_configs.tiflash` values.
+    # config:
+    #   logger.level: "info"
+    #   ## Multi-disk deployment introduced in v4.0.9
+    #   ## Check https://docs.pingcap.com/tidb/stable/tiflash-configuration#multi-disk-deployment for more details.
+    #   ## Example1:
+    #   # storage.main.dir: [ "/nvme_ssd0_512/tiflash", "/nvme_ssd1_512/tiflash" ]
+    #   # storage.main.capacity = [ 536870912000, 536870912000 ]
+    #   ## Example2:
+    #   # storage.main.dir: [ "/sata_ssd0_512/tiflash", "/sata_ssd1_512/tiflash", "/sata_ssd2_512/tiflash" ]
+    #   # storage.latest.dir: [ "/nvme_ssd0_150/tiflash" ]
+    #   # storage.main.capacity = [ 536870912000, 536870912000 ]
+    #   # storage.latest.capacity = [ 161061273600 ]
+    # learner_config:
+    #   log-level: "info"
+  - host: tc-tiflash-02
+  - host: tc-tiflash-03
+  - host: tc-tiflash-04
+
+cdc_servers:
+  - host: tc-ticdc-01
+    port: 8300
+    deploy_dir: "/tidb-deploy/cdc-8300"
+    data_dir: "/tidb-data/cdc-8300"
+    log_dir: "/tidb-deploy/cdc-8300/log"
+    # gc-ttl: 86400
+  - host: tc-ticdc-02
+    port: 8300
+    deploy_dir: "/tidb-deploy/cdc-8300"
+    data_dir: "/tidb-data/cdc-8300"
+    log_dir: "/tidb-deploy/cdc-8300/log"
+    # gc-ttl: 86400
+
+# TiSpark 部署方式参考：已有 Spark 集群的部署方式
+#  https://docs.pingcap.com/zh/tidb/stable/tispark-overview#%E5%B7%B2%E6%9C%89-spark-%E9%9B%86%E7%BE%A4%E7%9A%84%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F
+# NOTE: TiSpark support is an experimental feature, it's not recommend to be used in
+# production at present.
+# To use TiSpark, you need to manually install Java Runtime Environment (JRE) 8 on the
+# host, see the OpenJDK doc for a reference: https://openjdk.java.net/install/
+# If you have already installed JRE 1.8 at a location other than the default of system's
+# package management system, you may use the "java_home" field to set the JAVA_HOME variable.
+# NOTE: Only 1 master node is supported for now
+#tispark_masters:
+#  - host: 10.0.1.21
+#    # ssh_port: 22
+#    # port: 7077
+#    # web_port: 8080
+#    # deploy_dir: "/tidb-deploy/tispark-master-7077"
+#    # java_home: "/usr/local/bin/java-1.8.0"
+#    # spark_config:
+#    #   spark.driver.memory: "2g"
+#    #   spark.eventLog.enabled: "False"
+#    #   spark.tispark.grpc.framesize: 268435456
+#    #   spark.tispark.grpc.timeout_in_sec: 100
+#    #   spark.tispark.meta.reload_period_in_sec: 60
+#    #   spark.tispark.request.command.priority: "Low"
+#    #   spark.tispark.table.scan_concurrency: 256
+#    # spark_env:
+#    #   SPARK_EXECUTOR_CORES: 5
+#    #   SPARK_EXECUTOR_MEMORY: "10g"
+#    #   SPARK_WORKER_CORES: 5
+#    #   SPARK_WORKER_MEMORY: "10g"
+#
+## NOTE: multiple worker nodes on the same host is not supported by Spark
+#tispark_workers:
+#  - host: 10.0.1.22
+#    # ssh_port: 22
+#    # port: 7078
+#    # web_port: 8081
+#    # deploy_dir: "/tidb-deploy/tispark-worker-7078"
+#    # java_home: "/usr/local/bin/java-1.8.0"
+#  - host: 10.0.1.23
+
+monitoring_servers:
+  - host: tc-monitor
+    # ssh_port: 22
+    # port: 9090
+    # deploy_dir: "/tidb-deploy/prometheus-8249"
+    # data_dir: "/tidb-data/prometheus-8249"
+    # log_dir: "/tidb-deploy/prometheus-8249/log"
+
+grafana_servers:
+  - host: tc-monitor
+    # port: 3000
+    # deploy_dir: /tidb-deploy/grafana-3000
+
+alertmanager_servers:
+  - host: tc-monitor
+    # ssh_port: 22
+    # web_port: 9093
+    # cluster_port: 9094
+    # deploy_dir: "/tidb-deploy/alertmanager-9093"
+    # data_dir: "/tidb-data/alertmanager-9093"
+    # log_dir: "/tidb-deploy/alertmanager-9093/log"

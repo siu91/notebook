@@ -1,0 +1,2 @@
+run,driver,driverVersion,db,sessionStart,runMins,loadWarehouses,runWarehouses,numSUTThreads,limitTxnsPerMin,thinkTimeMultiplier,keyingTimeMultiplier
+404,simple,5.0,postgres,2020-12-18 13:59:24.675,10,10,10,16,100000,1.0,1.0
