@@ -7,3 +7,16 @@ title = "Siu 的笔记本"
 
 [build]
 build-dir = ".book"   
+
+[output.html]
+git-repository-url = "https://github.com/siu91/notebook"
+edit-url-template = "https://github.com/siu91/notebook/edit/main/{path}"
+additional-css = ["theme/style.css"]
+additional-js = ["assets/custom.js", "assets/showBigPicture.js"]
+
+[output.html.fold]
+enable = true
+level = 1
+
+[rust]
+edition = "2021"
