@@ -313,6 +313,274 @@ rudf6-t-16384
 <li><a href="https://sourceforge.net/projects/benchmarksql/">测试工具：BenchMarkSQL 5.0</a> | <a href="https://support.huaweicloud.com/tstg-kunpengdbs/kunpengbenchmarksql_06_0002.html">使用方法</a></li>
 <li><a href="https://tech.meituan.com/2017/07/14/sysbench-meituan.html">Sysbench 在美团点评中的应用</a></li>
 </ul>
+<h2><a class="header" href="#附录" id="附录">附录</a></h2>
+<h3><a class="header" href="#实现的脚本" id="实现的脚本">实现的脚本</a></h3>
+<pre><code class="language-shell">#!/bin/bash
+#
+# @CreationTime
+#   2022/3/15 下午16:45:20
+# @Function
+#
+# @Usage
+# @author Siu
+
+CURRENT_PATH=$(readlink -f &quot;$(dirname &quot;$0&quot;)&quot;)
+
+##  region 全局参数：当有配置文件覆盖时这里的参数无效
+db_ip=$(hostname -I | awk '{gsub(/^\s+|\s+$/, &quot;&quot;);print}')
+# 总查询的次数 = min(client_queries_limit,client_num * run_times)
+client_num=10
+run_times=5
+# 官方文档说明：Limit each client to approximately this number of queries，实际限制每个 client，而是限制总查询数
+client_queries_limit=10
+db_schema='ssb'
+db_user='root'
+db_port='9030'
+
+# 配置文件
+conf_file=&quot;${CURRENT_PATH}&quot;/config/conf
+# jobs
+jobs_path=&quot;${CURRENT_PATH}&quot;/config/jobs
+cmd_input=&quot;&quot;
+## endregion
+
+## 记录日志
+logFmt() {
+	date_str=$(date &quot;+%Y-%m-%d %H:%M:%S.%3N&quot;)
+	echo &quot;$(hostname -s)&quot; &quot;${date_str}&quot; &quot;$1&quot;
+	# shellcheck disable=SC2086
+	echo &quot;$(hostname -s)&quot; &quot;${date_str}&quot; $1 &gt;&gt;&quot;${archive_dir}&quot;/run.log
+}
+
+log() {
+	echo &quot;$1&quot;
+	# shellcheck disable=SC2086
+	echo $1 &gt;&gt;&quot;${archive_dir}&quot;/run.log
+}
+
+runMss() {
+	mysqlslap -u ${db_user} -P ${db_port} -h ${db_ip} \
+	--concurrency=${client_num} --iterations=${run_times} --number-of-queries=${client_queries_limit} --create-schema=${db_schema} \
+	--query=./&quot;${archive_dir}&quot;/&quot;$1&quot;.sql \
+	--pre-query=./&quot;${archive_dir}&quot;/p_&quot;$1&quot;.sql \
+	--csv=./&quot;${archive_dir}&quot;/&quot;$1&quot;.csv
+
+	tmp=$(cat ./&quot;${archive_dir}&quot;/&quot;$1&quot;.csv)
+	tmp1=$1${tmp}
+	echo &quot;$tmp1&quot; &gt;./&quot;${archive_dir}&quot;/&quot;$1&quot;.csv
+
+	res=$(cat ./&quot;${archive_dir}&quot;/&quot;$1&quot;.csv)
+
+}
+
+runJob() {
+	test_name=$1
+	query_sql=$2
+	pre_query=$3
+	echo &quot;${query_sql}&quot; &gt;./&quot;${archive_dir}&quot;/&quot;${test_name}&quot;.sql
+	echo &quot;${pre_query}&quot; &gt;./&quot;${archive_dir}&quot;/p_&quot;${test_name}&quot;.sql
+
+	log &quot;=====================================================================================================================================&quot;
+	logFmt &quot;执行测试：${test_name} &quot;
+	logFmt &quot;执行预处理：${pre_query}&quot;
+	logFmt &quot;执行测试 SQL：${query_sql}&quot;
+	runMss &quot;${test_name}&quot;
+	logFmt &quot;$1 执行完成： ${res}&quot;
+}
+
+runJobs() {
+	if [ ! -d &quot;${jobs_path}&quot; ]; then
+		logFmt &quot;jobs 路径不存在：$jobs_path&quot;
+		help
+		exit 1
+	else
+		for file in &quot;${jobs_path}&quot;/*; do
+			if test -f $file; then
+				#log &quot;加载：$file&quot;
+				# shellcheck disable=SC1090
+				. &quot;$file&quot;
+				test_name=$(basename &quot;$file&quot;)
+				runJob &quot;${test_name}&quot; &quot;${query_sql}&quot; &quot;${pre_query}&quot;
+			fi
+			if test -d &quot;$file&quot;; then
+				logFmt &quot;dir:$file&quot;
+			fi
+		done
+	fi
+
+}
+
+archiveRes() {
+	# 归档测试结果
+	echo 'test_name,mode,avg,min,max,client_num,queries_per_client' &gt;&quot;${archive_dir}&quot;/0.csv
+	cat &quot;${archive_dir}&quot;/*.csv &gt;&quot;${archive_dir}&quot;/result.csv
+	rm -rf &quot;${archive_dir}&quot;/0.csv
+
+	log &quot;##########################################################################&quot;
+	log &quot;测试结果： ${archive_dir}/result.csv &quot;
+	# shellcheck disable=SC2002
+	resFmt=$(cat &quot;${archive_dir}&quot;/result.csv | column -t -s,)
+	log &quot;${resFmt}&quot;
+	log &quot;#########################################################################&quot;
+}
+
+main() {
+  log &quot;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ sql性能测试工具 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&quot;
+  logFmt &quot;Options 参数：${cmd_input}&quot;
+	loadConf
+	showArgs
+	date_str=$(date &quot;+%Y%m%d%H%M%S%3N&quot;)
+	archive_dir=./output/test-&quot;${date_str}&quot;
+	# 创建归档目录
+	mkdir -p &quot;${archive_dir}&quot;
+	runJobs
+	archiveRes
+}
+
+showInfo() {
+	echo &quot;&quot;&quot;
+  ================================================
+  #                 sql 性能测试工具               #
+  # 版本： 1.0.0                                 #
+  # 作者： Siu                                   #
+  # Support By： mysqlslap                      #
+  ================================================
+
+  &quot;&quot;&quot;
+
+	help
+}
+
+loadConf() {
+	# shellcheck source=src/
+	# 加载配置全局文件
+	if [ ! -f &quot;${conf_file}&quot; ]; then
+		logFmt &quot;配置文件不存在将使用默认配置或命令行输入参数:${conf_file}&quot;
+	else
+		. &quot;${conf_file}&quot;
+		# shellcheck disable=SC2027
+		logFmt &quot;加载配置文件： ${conf_file}&quot;
+	fi
+
+}
+
+showArgs() {
+	log &quot;###############################################################################&quot;
+	log &quot;测试参数：&quot;
+	log &quot;db_ip=${db_ip}&quot;
+	log &quot;db_port=${db_port}&quot;
+	log &quot;db_schema=${db_schema}&quot;
+	log &quot;db_user=${db_user}&quot;
+	log &quot;client_num=${client_num}&quot;
+	log &quot;queries_limit=${client_queries_limit}&quot;
+	log &quot;###############################################################################&quot;
+
+}
+
+help() {
+	echo &quot;&quot;&quot;
+Usage: ./run.sh -f ./myconfig/conf.file
+       ./run.sh -j ./jobs
+       ./run.sh -h  192.168.1.1
+       ./run.sh -p  9001
+       ./run.sh -u  admin
+       ./run.sh -P  P@ssw0rd
+
+Options:
+  -f      配置文件路径，默认：./config/conf
+  -j      sql 任务路径，默认：./config/jobs
+  -H      数据库IP，默认：本机 IP
+  -p      数据库端口，默认：9030
+  -s      数据库Schema，默认：ssb
+  -u      数据库用户，默认：root
+  -P      数据库密码，默认：空（当前未加入Option）
+  -c      测试并发数，默认：10
+  -q      总查询次数，默认：10
+  -h      帮助信息
+  -v      工具版本信息
+
+  &quot;&quot;&quot;
+}
+
+
+#echo original parameters=[$@]
+
+# https://www.jianshu.com/p/6393259f0a13
+#-o或--options选项后面是可接受的短选项，如ab:c::，表示可接受的短选项为-a -b -c，
+#其中-a选项不接参数，-b选项后必须接参数，-c选项的参数为可选的
+#-l或--long选项后面是可接受的长选项，用逗号分开，冒号的意义同短选项。
+#-n选项后接选项解析错误时提示的脚本名字
+#ARGS=$(getopt -o ab:c:: --long along,blong:,clong:: -n &quot;$0&quot; -- &quot;$@&quot;)
+ARGS=$(getopt -o vhf:j:H:p:u:c:q: -n &quot;$0&quot; -- &quot;$@&quot;)
+if [ $? != 0 ]; then
+	logFmt &quot;参数错误，退出...&quot;
+	help
+	exit 1
+fi
+
+#echo ARGS=[$ARGS]
+#将规范化后的命令行参数分配至位置参数（$1,$2,...)
+eval set -- &quot;${ARGS}&quot;
+cmd_input=$(echo  formatted parameters=[$@])
+
+while true; do
+	case &quot;$1&quot; in
+	-v)
+		showInfo
+		exit 0
+		shift
+		;;
+	-h)
+		help
+		exit 0
+		shift
+		;;
+	-f)
+		conf_file=$2
+		shift 2
+		;;
+	-j)
+		jobs_path=$2
+		shift 2
+		;;
+	-H)
+		db_ip=$2
+		shift 2
+		;;
+	-p)
+		db_port=$2
+		shift 2
+		;;
+	-s)
+		db_schema=$2
+		shift 2
+		;;
+	-u)
+		db_user=$2
+		shift 2
+		;;
+	-c)
+		client_num=$2
+		shift 2
+		;;
+	-q)
+		#echo &quot;option q:$2&quot;
+		client_queries_limit=$2
+		shift 2
+		;;
+	--)
+		main
+		shift
+		break
+		;;
+	*)
+		help
+		exit 1
+		;;
+	esac
+done
+
+</code></pre>
 
                         <div id="giscus-container"></div>
                     </main>
