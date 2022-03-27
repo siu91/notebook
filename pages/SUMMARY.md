@@ -16,6 +16,7 @@
 
 - [最佳实践](./SUMMARY.md)
   
+  - [分享一下我的工具清单](./tech/bestpractices/my-toolchain.md)
   - [sql 性能测试工具的设计](./tech/bestpractices/sql性能测试工具的设计.md)
   - [Doris Remote UDF 的开发和测试](./tech/bestpractices/jrudf/doris-remote-udf.md)
   - [禅道工作流](./tech/bestpractices/禅道工作流.md)
