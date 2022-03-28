@@ -15,7 +15,9 @@
     - [账号体系](./tech/project/cicd/design/账号体系.md)
 
 - [最佳实践](./SUMMARY.md)
-  
+
+  - [怎样写一个技术方案的大纲](./tech/bestpractices/How-to-write-an-outline-for-a-technical-solution/index.md)
+    - [《技术解决方案》模版](./tech/bestpractices/How-to-write-an-outline-for-a-technical-solution/template.md)
   - [分享一下我的工具清单](./tech/bestpractices/my-toolchain.md)
   - [sql 性能测试工具的设计](./tech/bestpractices/sql性能测试工具的设计.md)
   - [Doris Remote UDF 的开发和测试](./tech/bestpractices/jrudf/doris-remote-udf.md)
