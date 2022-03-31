@@ -227,11 +227,18 @@
 <p>C 选择了“相信”用户，Java 选择了”包容“用户，Rust 选择了“教育”用户。
 孰优孰劣，不是今天的主题，还是回到 Java 内存的管理是怎样的？</p>
 <h2><a class="header" href="#栈和堆" id="栈和堆">栈和堆</a></h2>
+<h3><a class="header" href="#栈" id="栈">栈</a></h3>
+<h3><a class="header" href="#堆" id="堆">堆</a></h3>
+<h3><a class="header" href="#数据放在哪" id="数据放在哪">数据放在哪</a></h3>
+<h2><a class="header" href="#jvm-管理的内存" id="jvm-管理的内存">JVM 管理的内存</a></h2>
+<h3><a class="header" href="#java-虚拟机规范里的定义" id="java-虚拟机规范里的定义">Java 虚拟机规范里的定义</a></h3>
 <h2><a class="header" href="#引用" id="引用">引用</a></h2>
 <h2><a class="header" href="#字符串" id="字符串">字符串</a></h2>
 <h2><a class="header" href="#gc" id="gc">GC</a></h2>
 <h2><a class="header" href="#逃逸分析" id="逃逸分析">逃逸分析</a></h2>
 <h2><a class="header" href="#另一种实现netty-中的内存管理" id="另一种实现netty-中的内存管理">另一种实现：Netty 中的内存管理</a></h2>
+<h2><a class="header" href="#ref" id="ref">ref</a></h2>
+<p><a href="https://docs.oracle.com/javase/specs/jls/se11/html/index.html">Java 虚拟机规范（英文）</a></p>
 <h1><a class="header" href="#siu-的笔记本-1" id="siu-的笔记本-1">Siu 的笔记本</a></h1>
 <ul>
 <li>
@@ -2046,7 +2053,7 @@ vrrp_instance haproxy-vip {
 <li><del>宽表限制：默认为 1017，最大可调至 4096</del></li>
 <li><del>技术的掌握能力</del></li>
 </ul>
-<h2><a class="header" href="#ref" id="ref">REF</a></h2>
+<h2><a class="header" href="#ref-1" id="ref-1">REF</a></h2>
 <ul>
 <li>
 <p>Kudu</p>
@@ -2207,7 +2214,7 @@ vrrp_instance haproxy-vip {
 <p>        <a href="http://192.168.1.23/cecdat/framework/devops/jpl">jpl</a> 是一个内部公共的 Jenkins Pipeline Library ，基于 Jenkins 扩展共享库（<em><strong>Shared Library</strong></em>）的能力，用 groovy 代码定义和编排 CI/CD 流水线<strong>阶段</strong>和<strong>步骤</strong>，用于简化项目的 CI/CD 配置，提升项目的 CI/CD 能力：使项目保持<strong>频繁部署</strong>，快速生成可部署的软件，提高项目的<strong>能见度</strong>；快速发布，能够应对业务需求，并更快地实现软件价值；编码-&gt;测试-&gt;上线-&gt;交付的<strong>迭代周期缩短</strong>，同时获得迅速反馈。</p>
 <p>        <code>jpl</code> 基于 Jenkins 作为 CI/CD 的执行引擎，并结合<strong>当前公司业务特性</strong>和<strong>规范</strong>设计的多分支流水线，实现了包括：代码检出、前置检查（仓库规范、分支模型规范、<code>Semver</code> 规范）、编译和打包、Sonar 扫描、提交分析、自动归档制品、部署、触发自动化接口测试、自动合并代码、归档已发布代码、邮件通知等流水线步骤；借助 <code>Jenkins BlueOcean</code> 的功能使构建过程<strong>实时可视</strong>，并设计实现了一些常用的<strong>图形化操作</strong>：启停服务、从制品库发布、手动部署所有服务、刷新<code>Jenkinsfile</code>、跳过阶段、暂停进入调试。</p>
 <p>        <code>jpl</code> 实现了 <em><strong><code>Pipeline as Code</code></strong></em>，为 CI/CD 实践过程中的“最后一公里”保驾护航。</p>
-<h3><a class="header" href="#ref-1" id="ref-1">Ref</a></h3>
+<h3><a class="header" href="#ref-2" id="ref-2">Ref</a></h3>
 <ul>
 <li>
 <p><em>表-1 来自《企业级 DevOps 实战》</em></p>
@@ -2415,7 +2422,7 @@ vrrp_instance haproxy-vip {
 </ul>
 <h2><a class="header" href="#大纲的内容示例" id="大纲的内容示例">大纲的内容示例</a></h2>
 <p><img src="tech/bestpractices/How-to-write-an-outline-for-a-technical-solution/assets/image-20220328151253737.png" alt="image-20220328151253737" /></p>
-<h2><a class="header" href="#ref-2" id="ref-2">ref</a></h2>
+<h2><a class="header" href="#ref-3" id="ref-3">ref</a></h2>
 <p><a href="https://jiamaoxiang.top/2021/05/04/%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AF%A5%E5%A6%82%E4%BD%95%E5%86%99%E4%B8%80%E7%AF%87%E9%AB%98%E8%B4%A8%E9%87%8F%E7%9A%84%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/">程序员该如何写一篇高质量的技术文章</a></p>
 <p><strong>文档编号：</strong></p>
 <p><strong>xxx有限公司</strong></p>
@@ -2680,7 +2687,7 @@ rudf4-t-4096   mixed  1.447  1.396  1.518  10          1
 rudf6-t-16384
 #########################################################################
 </code></pre>
-<h2><a class="header" href="#ref-3" id="ref-3">ref</a></h2>
+<h2><a class="header" href="#ref-4" id="ref-4">ref</a></h2>
 <ul>
 <li><a href="https://sourceforge.net/projects/benchmarksql/">测试工具：BenchMarkSQL 5.0</a> | <a href="https://support.huaweicloud.com/tstg-kunpengdbs/kunpengbenchmarksql_06_0002.html">使用方法</a></li>
 <li><a href="https://tech.meituan.com/2017/07/14/sysbench-meituan.html">Sysbench 在美团点评中的应用</a></li>
@@ -3215,7 +3222,7 @@ sh build.sh --clean --be --fe --ui
 <p>需要 which 一下看看 gcc 的位置，在 <code>env.sh</code> 中设置一下 <code>${DORIS_GCC_HOME}</code></p>
 </li>
 </ul>
-<h2><a class="header" href="#ref-4" id="ref-4">ref</a></h2>
+<h2><a class="header" href="#ref-5" id="ref-5">ref</a></h2>
 <ul>
 <li><a href="https://doris.apache.org/zh-CN/extending-doris/udf/remote-user-defined-function.html">Doris Remote UDF</a></li>
 <li><a href="https://doris.apache.org/zh-CN/installing/compilation.html#%E4%BD%BF%E7%94%A8-docker-%E5%BC%80%E5%8F%91%E9%95%9C%E5%83%8F%E7%BC%96%E8%AF%91-%E6%8E%A8%E8%8D%90">Doris 编译</a></li>
@@ -4649,7 +4656,7 @@ This reverts commit 667ecc1654a317a13331b17617d973392f415f02.
 <h4><a class="header" href="#create-merge-request-1" id="create-merge-request-1">Create Merge Request</a></h4>
 <p><img src="tech/bestpractices/./assets/image-20200513232420455.png" alt="image-20200513232420455" /></p>
 <p><img src="tech/bestpractices/./assets/image-20200513232758013.png" alt="image-20200513232758013" /></p>
-<h1><a class="header" href="#ref-5" id="ref-5">Ref</a></h1>
+<h1><a class="header" href="#ref-6" id="ref-6">Ref</a></h1>
 <p><a href="https://linux.cn/article-8503-1.html">GitLab 工作流概览</a></p>
 <h1><a class="header" href="#gitlab-issue-规范指南" id="gitlab-issue-规范指南">Gitlab Issue 规范指南</a></h1>
 <blockquote>
