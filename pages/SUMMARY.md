@@ -1,5 +1,8 @@
 # Siu 的笔记本
 
+- [思考和总结🤔](./SUMMARY.md)
+  - [谈谈 Java 的内存管理](./tech/backend/java-mem-mgmt/java-memory-management.md)
+
 - [架构和设计](./SUMMARY.md)
   
   - [Java 后端框架选型指南](./tech/backend/Java-Backend-Framework-Selection-Guide.md)
