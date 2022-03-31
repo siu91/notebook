@@ -13,6 +13,16 @@ C 选择了“相信”用户，Java 选择了”包容“用户，Rust 选择�
 
 ## 栈和堆
 
+### 栈
+
+### 堆
+
+### 数据放在哪
+
+## JVM 管理的内存
+
+### Java 虚拟机规范里的定义
+
 ## 引用
 
 ## 字符串
@@ -22,3 +32,7 @@ C 选择了“相信”用户，Java 选择了”包容“用户，Rust 选择�
 ## 逃逸分析
 
 ## 另一种实现：Netty 中的内存管理
+
+## ref
+
+[Java 虚拟机规范（英文）](https://docs.oracle.com/javase/specs/jls/se11/html/index.html)
