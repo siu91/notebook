@@ -145,13 +145,19 @@ Java虚拟机栈（Java Virtual Machine Stacks）描述的是Java方法执行的
 
 #### 程序计数器/寄存器
 
-它是每个线程私有的空间，JVM会为每个线程创建单独的程序寄存器，在任意时刻，一个Java线程总是在执行一个方法，这个方法被称为当前方法，如果当前方法不是本地方法，程序寄存器会执行当前正在被执行的指令，如果是本地方法，则程序寄存器值为undefined，寄存器存放如当前环境指针、程序计数器、操作栈指针、计算的变量指针等信息。
+程序计数器是一块较小的内存空间，是当前线程正在执行的那条字节码指令的地址。若当前线程正在执行的是一个本地方法，那么此时程序计数器为`Undefined`。
 
+##### 作用
 
+- 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制。
+- 在多线程情况下，程序计数器记录的是当前线程执行的位置，从而当线程切换回来时，就知道上次线程执行到哪了。
 
-程序计数器（Program Counter Register）是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里，字节码解析器的工作是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。
+##### 特点
 
-由于jvm的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的，也就是任何时刻，一个处理器（或者说一个内核）都只会执行一条线程中的指令。因此为了线程切换后能恢复到正确的执行位置，每个线程都有独立的程序计数器。
+- 是一块较小的内存空间。
+- 线程私有，每条线程都有自己的程序计数器。
+- 生命周期：随着线程的创建而创建，随着线程的结束而销毁。
+- 是唯一一个不会出现 `OutOfMemoryError` 的内存区域。
 
 
 
@@ -181,6 +187,13 @@ Java的 `NIO`中的`allocateDirect`方法是可以直接使用直接内存的，
 
 ## GC
 
+## OOM 
+
+- [Java 堆溢出](https://github.com/TangBean/understanding-the-jvm/blob/master/Ch1-Java内存管理机制/01-OOM异常.md#java-堆溢出)
+- [Java 虚拟机栈和本地方法栈溢出](https://github.com/TangBean/understanding-the-jvm/blob/master/Ch1-Java内存管理机制/01-OOM异常.md#java-虚拟机栈和本地方法栈溢出)
+- [方法区和运行时常量池溢出](https://github.com/TangBean/understanding-the-jvm/blob/master/Ch1-Java内存管理机制/01-OOM异常.md#方法区和运行时常量池溢出)
+- [直接内存溢出](https://github.com/TangBean/understanding-the-jvm/blob/master/Ch1-Java内存管理机制/01-OOM异常.md#直接内存溢出)
+
 ## 逃逸分析
 
 ## 另一种实现：Netty 中的内存管理
@@ -202,4 +215,8 @@ Java的 `NIO`中的`allocateDirect`方法是可以直接使用直接内存的，
 [jverson.com/thinking-in-java/](https://jverson.com/thinking-in-java/jvm/jvm-components.html)
 
 [栈帧中的动态链接作用是什么？](https://www.zhihu.com/question/48267791)
+
+[深入理解虚拟机笔记](https://github.com/TangBean/understanding-the-jvm/tree/master/Ch1-Java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6)
+
+[直接内存溢出](https://juejin.cn/post/7026561428538523684)
 
