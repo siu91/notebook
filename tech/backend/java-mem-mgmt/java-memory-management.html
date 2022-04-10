@@ -206,11 +206,32 @@
 <h3><a class="header" href="#jvm-的内存结构" id="jvm-的内存结构">JVM 的内存结构</a></h3>
 <p>JVM 规范定义中的内存模型如上图中的运行时数据区中的描述，有以下主要定义：</p>
 <ul>
-<li>方法区：存储已被类加载系统加载的类信息、常量、静态变量等；
+<li>
+<p>方法区（Method Area）：存储已被类加载系统加载的类信息、常量、静态变量等；</p>
 <ul>
-<li>方法区在JDK7及之前，是由堆中的”永久代（PermGen）“作为实现，逻辑上与堆是连续的内存空间</li>
-<li>JDK7 开始移除永久代，在 JDK8时正式被移除，方法区的定义由元空间在本地内存中实现。</li>
-<li>内存异常：</li>
+<li>
+<p>JVM 规范中的定义：实现有“元空间”、“永久代”；</p>
+</li>
+<li>
+<p>方法区在JDK7及之前，是由堆中的”永久代（PermGen）“作为实现，逻辑上与堆是连续的内存空间；</p>
+</li>
+<li>
+<p>JDK7 开始移除永久代，在 JDK8时正式被移除，方法区的定义由元空间在本地内存中实现；</p>
+</li>
+<li>
+<p>内存异常：OutOfMemoryError：Metaspace、OutOfMemoryError：PermGen space</p>
+</li>
+</ul>
+</li>
+<li>
+<p>VM 栈（Java Virtual Machine Stack）：</p>
+<ul>
+<li>描述方法执行过程的内存模型；</li>
+<li>方法执行时，同时会创建一个栈镇（Stack Frame）用于存储：
+<ul>
+<li>局部变量表：方法参数、方法体内局部变量、基本类型、对象引用（指针）、返回地址类型</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
