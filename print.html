@@ -321,16 +321,19 @@
 <p>每个方法在执行的同时都会创建一个线帧（Stack Frame）用于存储:</p>
 <ul>
 <li>
-<p>局部变量表</p>
+<p>局部变量表（Local Variable Array）</p>
 </li>
 <li>
-<p>操作数栈</p>
+<p>操作数栈（Operand Stack）</p>
 </li>
 <li>
-<p>动态链接</p>
+<p>动态链接（Dynamic Linking）</p>
 </li>
 <li>
-<p>方法出口等信息</p>
+<p>返回地址（Return Address）</p>
+</li>
+<li>
+<p>指向运行时常量池的引用</p>
 </li>
 </ul>
 <p>每个方法从调用直至执行完成的过程，都对应着一个线帧在虚拟机栈中入栈到出栈的过程。</p>
