@@ -297,3 +297,5 @@ Java的 `NIO`中的`allocateDirect`方法是可以直接使用直接内存的，
 
 [直接内存溢出](https://juejin.cn/post/7026561428538523684)
 
+[JVM参数设置-jdk8 ](https://www.cnblogs.com/halberts/p/11918326.html)
+
