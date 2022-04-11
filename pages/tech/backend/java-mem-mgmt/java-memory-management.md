@@ -127,13 +127,14 @@ Java虚拟机栈（Java Virtual Machine Stacks）描述的是Java方法执行的
 
 每个方法在执行的同时都会创建一个线帧（Stack Frame）用于存储:
 
-- 局部变量表
+- 局部变量表（Local Variable Array）
 
-- 操作数栈
+- 操作数栈（Operand Stack）
 
-- 动态链接
+- 动态链接（Dynamic Linking）
 
-- 方法出口等信息
+- 返回地址（Return Address）
+- 指向运行时常量池的引用
 
 
 
