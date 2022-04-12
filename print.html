@@ -256,6 +256,7 @@
 </ul>
 </blockquote>
 <h3><a class="header" href="#jvm-的内存结构runtime-data-area" id="jvm-的内存结构runtime-data-area">JVM 的内存结构（Runtime Data Area）</a></h3>
+<p><img src="tech/backend/java-mem-mgmt/assets/jvm-runtime-data-area.png" alt="jvm-runtime-data-area" /></p>
 <p>JVM 规范定义中的内存模型如上图中的运行时数据区中的描述，有以下主要定义：</p>
 <ul>
 <li>
@@ -318,7 +319,7 @@
 <p>随着JIT编译器的发展和逃逸分析技术的逐渐成熟，栈上分配、标量替换优化的技术将会导致一些微妙的变化，所有的对象都分配在堆上渐渐变得不那么“绝对”了。</p>
 <h4><a class="header" href="#vm-栈" id="vm-栈">VM 栈</a></h4>
 <p>Java虚拟机栈（Java Virtual Machine Stacks）描述的是Java方法执行的内存模型。</p>
-<p>每个方法在执行的同时都会创建一个线帧（Stack Frame）用于存储:</p>
+<p>每个方法在执行的同时都会创建一个栈帧（Stack Frame）用于存储:</p>
 <ul>
 <li>
 <p>局部变量表（Local Variable Array）</p>
@@ -336,13 +337,13 @@
 <p>指向运行时常量池的引用</p>
 </li>
 </ul>
-<p>每个方法从调用直至执行完成的过程，都对应着一个线帧在虚拟机栈中入栈到出栈的过程。</p>
+<p>每个方法从调用直至执行完成的过程，都对应着一个栈帧在虚拟机栈中入栈到出栈的过程。</p>
 <p>栈空间是每个线程独有的，互相直接不能访问。</p>
 <blockquote>
 <p>知识点：动态链接</p>
 <p>每一个栈帧内部都包含一个指向<strong>运行时常量池</strong>中该栈帧所属方法的引用，包含这个引用的目的就是为了支持当前方法的代码能够实现<strong>动态链接（Dynamic Linking）</strong>。比如：invokedynamic指令</p>
 <p>在Java源文件被编译到字节码文件时，所有的变量和方法引用都作为符号引用（Symbilic Reference）保存在class文件的常量池里。</p>
-<p>比如：描述一个方法调用了另外的其他方法时，就是通过常量池中指向方法的符号引用来表示的，<strong>动态链接的作用就是为了将这些符号引用转换位调用方法的直接引用</strong>。</p>
+<p>比如：描述一个方法调用了另外的其他方法时，就是通过常量池中指向方法的符号引用来表示的，<strong>动态链接的作用就是为了将这些符号引用转为调用方法的直接引用</strong>。</p>
 </blockquote>
 <h5><a class="header" href="#压栈出栈过程" id="压栈出栈过程">压栈出栈过程</a></h5>
 <p>当方法运行过程中需要创建局部变量时，就将局部变量的值存入栈帧中的局部变量表中。</p>
@@ -352,7 +353,7 @@
 <p>由于 Java 虚拟机栈是与线程对应的，数据不是线程共享的（也就是线程私有的)，因此不用关心数据一致性问题，也不会存在同步锁的问题。</p>
 </blockquote>
 <h5><a class="header" href="#局部变量表" id="局部变量表">局部变量表</a></h5>
-<p>定义为一个数字数组，主要用于存储方法参数、定义在方法体内部的局部变量，数据类型包括各类基本数据类型，对象引用，以及 return address 类型。</p>
+<p>定义为一个数字数组，主要用于存储方法参数、定义在方法体内部的局部变量，数据类型包括各类<strong>基本数据类型，对象引用，以及 return address 类型</strong>。</p>
 <p>局部变量表容量大小是在编译期确定下来的。最基本的存储单元是 slot，32 位占用一个 slot，64 位类型（long 和 double）占用两个 slot。</p>
 <p>对于 slot 的理解：</p>
 <ul>
@@ -442,7 +443,7 @@
 <h2><a class="header" href="#逃逸分析" id="逃逸分析">逃逸分析</a></h2>
 <h2><a class="header" href="#另一种实现netty-中的内存管理" id="另一种实现netty-中的内存管理">另一种实现：Netty 中的内存管理</a></h2>
 <h2><a class="header" href="#ref" id="ref">ref</a></h2>
-<p><a href="https://docs.oracle.com/javase/specs/jls/se11/html/index.html">Java 虚拟机规范（英文）</a></p>
+<p><a href="https://docs.oracle.com/javase/specs/jvms/se8/html/index.html">Java 虚拟机规范（英文）</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/346471261">方法区、永久代、元空间辨析</a></p>
 <p><a href="https://juejin.cn/post/6844903815754285069">JVM 的组成</a></p>
 <p><a href="https://www.cnblogs.com/jichi/p/12580906.html">堆内存：年轻代、年老代、永久代</a></p>
@@ -453,6 +454,9 @@
 <p><a href="https://github.com/TangBean/understanding-the-jvm/tree/master/Ch1-Java%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6">深入理解虚拟机笔记</a></p>
 <p><a href="https://juejin.cn/post/7026561428538523684">直接内存溢出</a></p>
 <p><a href="https://www.cnblogs.com/halberts/p/11918326.html">JVM参数设置-jdk8 </a></p>
+<p><a href="https://segmentfault.com/a/1190000037628881">Java 字节码子令集概述</a></p>
+<p><a href="https://segmentfault.com/a/1190000039083244">字节码和字节码分析</a></p>
+<p><a href="https://blog.csdn.net/antony1776/article/details/89843145">深入理解 JVM 中的 returnAddress</a></p>
 <h1><a class="header" href="#siu-的笔记本-1" id="siu-的笔记本-1">Siu 的笔记本</a></h1>
 <ul>
 <li>
