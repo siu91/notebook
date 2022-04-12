@@ -62,6 +62,8 @@ Java 用GC 给用户带来了友好，只需要关注定义、赋值、创建对
 
 ### JVM 的内存结构（Runtime Data Area）
 
+![jvm-runtime-data-area](assets/jvm-runtime-data-area.png)
+
 JVM 规范定义中的内存模型如上图中的运行时数据区中的描述，有以下主要定义：
 
 - 方法区（Method Area）：存储已被类加载系统加载的类信息、常量、静态变量等；
@@ -125,7 +127,7 @@ Java堆（Java Heap）是Java虚拟机中内存最大的一块，是被所有线
 
 Java虚拟机栈（Java Virtual Machine Stacks）描述的是Java方法执行的内存模型。
 
-每个方法在执行的同时都会创建一个线帧（Stack Frame）用于存储:
+每个方法在执行的同时都会创建一个栈帧（Stack Frame）用于存储:
 
 - 局部变量表（Local Variable Array）
 
@@ -138,7 +140,7 @@ Java虚拟机栈（Java Virtual Machine Stacks）描述的是Java方法执行的
 
 
 
-每个方法从调用直至执行完成的过程，都对应着一个线帧在虚拟机栈中入栈到出栈的过程。
+每个方法从调用直至执行完成的过程，都对应着一个栈帧在虚拟机栈中入栈到出栈的过程。
 
 栈空间是每个线程独有的，互相直接不能访问。
 
@@ -150,7 +152,7 @@ Java虚拟机栈（Java Virtual Machine Stacks）描述的是Java方法执行的
 >
 >在Java源文件被编译到字节码文件时，所有的变量和方法引用都作为符号引用（Symbilic Reference）保存在class文件的常量池里。
 >
->比如：描述一个方法调用了另外的其他方法时，就是通过常量池中指向方法的符号引用来表示的，**动态链接的作用就是为了将这些符号引用转换位调用方法的直接引用**。
+>比如：描述一个方法调用了另外的其他方法时，就是通过常量池中指向方法的符号引用来表示的，**动态链接的作用就是为了将这些符号引用转为调用方法的直接引用**。
 
 
 
@@ -166,7 +168,7 @@ Java 虚拟机栈的栈顶的栈帧是当前正在执行的活动栈，也就是
 
 ##### 局部变量表
 
-定义为一个数字数组，主要用于存储方法参数、定义在方法体内部的局部变量，数据类型包括各类基本数据类型，对象引用，以及 return address 类型。
+定义为一个数字数组，主要用于存储方法参数、定义在方法体内部的局部变量，数据类型包括各类**基本数据类型，对象引用，以及 return address 类型**。
 
 局部变量表容量大小是在编译期确定下来的。最基本的存储单元是 slot，32 位占用一个 slot，64 位类型（long 和 double）占用两个 slot。
 
@@ -278,7 +280,7 @@ Java的 `NIO`中的`allocateDirect`方法是可以直接使用直接内存的，
 
 ## ref
 
-[Java 虚拟机规范（英文）](https://docs.oracle.com/javase/specs/jls/se11/html/index.html)
+[Java 虚拟机规范（英文）](https://docs.oracle.com/javase/specs/jvms/se8/html/index.html)
 
 [方法区、永久代、元空间辨析](https://zhuanlan.zhihu.com/p/346471261)
 
@@ -299,4 +301,10 @@ Java的 `NIO`中的`allocateDirect`方法是可以直接使用直接内存的，
 [直接内存溢出](https://juejin.cn/post/7026561428538523684)
 
 [JVM参数设置-jdk8 ](https://www.cnblogs.com/halberts/p/11918326.html)
+
+[Java 字节码子令集概述](https://segmentfault.com/a/1190000037628881)
+
+[字节码和字节码分析](https://segmentfault.com/a/1190000039083244)
+
+[深入理解 JVM 中的 returnAddress](https://blog.csdn.net/antony1776/article/details/89843145)
 
