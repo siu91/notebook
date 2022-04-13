@@ -2,11 +2,11 @@
 
 - [思考和总结🤔](./SUMMARY.md)
   - [团队人员模型](./mgmt/srcwd/index.md)
-  - [谈谈 Java 的内存管理](./tech/backend/java-mem-mgmt/java-memory-management.md)
+  - [谈谈 Java 的内存管理（doing）](./tech/backend/java-mem-mgmt/java-memory-management.md)
 
 - [架构和设计](./SUMMARY.md)
   
-  - [Java 后端框架选型指南](./tech/backend/Java-Backend-Framework-Selection-Guide.md)
+  - [Java 后端框架选型指南（doing）](./tech/backend/Java-Backend-Framework-Selection-Guide.md)
   - [PG HA 方案](./tech/project/PGHA/pg-ha-solution.md)
   - [KuberSphere 生产部署方案](./tech/project/kubesphere/基于Linux安装kubesphere3多节点集群(prod).md)
   - [构建实时湖仓](./tech/project/lwpoc/lwpoc/架构/构建实时湖仓.md)
