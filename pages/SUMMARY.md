@@ -1,7 +1,7 @@
 # Siu 的笔记本
 
 - [思考和总结🤔](./SUMMARY.md)
-  - [团队人员模型](./mgmt/srcwd/index.md)
+  - [团队人员定义模型](./mgmt/srcwd/index.md)
   - [谈谈 Java 的内存管理（doing）](./tech/backend/java-mem-mgmt/java-memory-management.md)
 
 - [架构和设计](./SUMMARY.md)
