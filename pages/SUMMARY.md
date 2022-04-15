@@ -17,6 +17,8 @@
     - [cec-jpl 设计](./tech/project/cicd/design/cec-jpl设计.md)
     - [数据库自动化](./tech/project/cicd/design/数据库自动化.md)
     - [账号体系](./tech/project/cicd/design/账号体系.md)
+  - [Doris Uniq 模型：分析场景下保证 Key 的唯一性](./tech/db/doris/doris-uniq-model/index.md)
+  
 
 - [最佳实践](./SUMMARY.md)
 
