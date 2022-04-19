@@ -1,0 +1,3 @@
+[submodule "pages/tech/project/AAA"]
+	path = pages/tech/project/AAA
+	url = https://github.com/siu91/AAA.git
