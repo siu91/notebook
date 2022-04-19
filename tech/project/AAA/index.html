@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>DDD 实践：应用架构原型（doing） - Siu 的笔记本</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="../../../theme/style.css">
+        
+
+        
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../../SUMMARY.html"><strong aria-hidden="true">1.</strong> 思考和总结🤔</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../mgmt/srcwd/index.html"><strong aria-hidden="true">1.1.</strong> 团队人员定义模型</a></li><li class="chapter-item "><a href="../../../tech/backend/java-mem-mgmt/java-memory-management.html"><strong aria-hidden="true">1.2.</strong> 谈谈 Java 的内存管理（doing）</a></li></ol></li><li class="chapter-item expanded "><a href="../../../SUMMARY.html"><strong aria-hidden="true">2.</strong> 架构和设计</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../tech/project/AAA/index.html" class="active"><strong aria-hidden="true">2.1.</strong> DDD 实践：应用架构原型（doing）</a></li><li class="chapter-item "><a href="../../../tech/backend/Java-Backend-Framework-Selection-Guide.html"><strong aria-hidden="true">2.2.</strong> Java 后端框架选型指南（doing）</a></li><li class="chapter-item "><a href="../../../tech/project/PGHA/pg-ha-solution.html"><strong aria-hidden="true">2.3.</strong> PG HA 方案</a></li><li class="chapter-item "><a href="../../../tech/project/kubesphere/基于Linux安装kubesphere3多节点集群(prod).html"><strong aria-hidden="true">2.4.</strong> KuberSphere 生产部署方案</a></li><li class="chapter-item "><a href="../../../tech/project/lwpoc/lwpoc/架构/构建实时湖仓.html"><strong aria-hidden="true">2.5.</strong> 构建实时湖仓</a></li><li class="chapter-item "><a href="../../../tech/project/cicd/index.html"><strong aria-hidden="true">2.6.</strong> CICD 设计</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../tech/project/cicd/design/CICD架构.html"><strong aria-hidden="true">2.6.1.</strong> CI/CD 架构</a></li><li class="chapter-item "><a href="../../../tech/project/cicd/design/Jenkins_Cluster.html"><strong aria-hidden="true">2.6.2.</strong> Jenkins 集群</a></li><li class="chapter-item "><a href="../../../tech/project/cicd/design/多分支流水线设计.html"><strong aria-hidden="true">2.6.3.</strong> 多分支流水线设计</a></li><li class="chapter-item "><a href="../../../tech/project/cicd/design/cec-jpl设计.html"><strong aria-hidden="true">2.6.4.</strong> cec-jpl 设计</a></li><li class="chapter-item "><a href="../../../tech/project/cicd/design/数据库自动化.html"><strong aria-hidden="true">2.6.5.</strong> 数据库自动化</a></li><li class="chapter-item "><a href="../../../tech/project/cicd/design/账号体系.html"><strong aria-hidden="true">2.6.6.</strong> 账号体系</a></li></ol></li><li class="chapter-item "><a href="../../../tech/db/doris/doris-uniq-model/index.html"><strong aria-hidden="true">2.7.</strong> Doris Uniq 模型：分析场景下保证 Key 的唯一性</a></li></ol></li><li class="chapter-item expanded "><a href="../../../SUMMARY.html"><strong aria-hidden="true">3.</strong> 最佳实践</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../tech/bestpractices/How-to-write-an-outline-for-a-technical-solution/index.html"><strong aria-hidden="true">3.1.</strong> 怎样写一个技术方案的大纲</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../../tech/bestpractices/How-to-write-an-outline-for-a-technical-solution/template.html"><strong aria-hidden="true">3.1.1.</strong> 《技术解决方案》模版</a></li></ol></li><li class="chapter-item "><a href="../../../tech/bestpractices/my-toolchain.html"><strong aria-hidden="true">3.2.</strong> 分享一下我的工具清单</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/sql性能测试工具的设计.html"><strong aria-hidden="true">3.3.</strong> sql 性能测试工具的设计</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/jrudf/doris-remote-udf.html"><strong aria-hidden="true">3.4.</strong> Doris Remote UDF 的开发和测试</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/禅道工作流.html"><strong aria-hidden="true">3.5.</strong> 禅道工作流</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/单元测试规范.html"><strong aria-hidden="true">3.6.</strong> 单元测试规范</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/数据库自动化-Flyway使用规范.html"><strong aria-hidden="true">3.7.</strong> 数据库自动化：Flyway</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/语义化版本控制规范.html"><strong aria-hidden="true">3.8.</strong> 语义化版本</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/API设计规范.html"><strong aria-hidden="true">3.9.</strong> API设计规范</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/git-collaborative-development-tutorials/git协同开发指南.html"><strong aria-hidden="true">3.10.</strong> git 协同开发指南</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/code-review-guide-baseon-gitlab.html"><strong aria-hidden="true">3.11.</strong> Gitlab Code Review 指南</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/gitlab-issue-workflow.html"><strong aria-hidden="true">3.12.</strong> Gitlab Issue 工作流</a></li><li class="chapter-item "><a href="../../../tech/bestpractices/Python编码规范.html"><strong aria-hidden="true">3.13.</strong> Python 编码规范</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Siu 的笔记本</h1>
+
+                    <div class="right-buttons">
+                        
+                        
+                        <a href="https://github.com/siu91/notebook" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <!-- Page table of contents -->
+                    <div class="sidetoc"><nav class="pagetoc"></nav></div>
+                    <main>
+                        <h1><a class="header" href="#ddd-实践应用架构原型doing" id="ddd-实践应用架构原型doing">DDD 实践：应用架构原型（doing）</a></h1>
+
+                        <div id="giscus-container"></div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../../SUMMARY.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../../tech/backend/Java-Backend-Framework-Selection-Guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../../SUMMARY.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../../tech/backend/Java-Backend-Framework-Selection-Guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../../book.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" charset="utf-8">
+        var pagePath = "tech/project/AAA/index.md"
+        </script>
+
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../../../assets/custom.js"></script>
+        
+        <script type="text/javascript" src="../../../assets/showBigPicture.js"></script>
+        
+
+        
+
+    </body>
+</html>
