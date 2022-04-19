@@ -6,6 +6,7 @@
 
 - [架构和设计](./SUMMARY.md)
   
+  - [DDD 实践：应用架构原型（doing）](./tech/project/AAA/README.md)
   - [Java 后端框架选型指南（doing）](./tech/backend/Java-Backend-Framework-Selection-Guide.md)
   - [PG HA 方案](./tech/project/PGHA/pg-ha-solution.md)
   - [KuberSphere 生产部署方案](./tech/project/kubesphere/基于Linux安装kubesphere3多节点集群(prod).md)
