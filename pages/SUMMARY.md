@@ -27,7 +27,7 @@
     - [《技术解决方案》模版](./tech/bestpractices/How-to-write-an-outline-for-a-technical-solution/template.md)
   - [分享一下我的工具清单](./tech/bestpractices/my-toolchain.md)
   - [sql 性能测试工具的设计](./tech/bestpractices/sql性能测试工具的设计.md)
-  - [Doris Remote UDF 的开发和测试](./tech/bestpractices/jrudf/doris-remote-udf.md)
+  - [Doris Remote UDF 的开发和测试](./tech/project/jrudf/README.md)
   - [禅道工作流](./tech/bestpractices/禅道工作流.md)
   - [单元测试规范](./tech/bestpractices/单元测试规范.md)
   - [数据库自动化：Flyway](./tech/bestpractices/数据库自动化-Flyway使用规范.md)
