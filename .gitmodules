@@ -1,3 +1,6 @@
 [submodule "pages/tech/project/AAA"]
 	path = pages/tech/project/AAA
 	url = https://github.com/siu91/AAA
+[submodule "pages/tech/project/jrudf"]
+	path = pages/tech/project/jrudf
+	url = https://github.com/siu91/jrudf
