@@ -541,12 +541,29 @@
 </ul>
 </li>
 </ul>
-<h1><a class="header" href="#ddd-实践应用架构原型doing" id="ddd-实践应用架构原型doing">DDD 实践：应用架构原型（doing）</a></h1>
+<h1><a class="header" href="#application-architecture-archetype应用架构原型" id="application-architecture-archetype应用架构原型">Application Architecture Archetype（应用架构原型）</a></h1>
+<blockquote>
+<p>By <a href="tech/project/AAA/">Siu</a> 2022/4/19</p>
+</blockquote>
+<h2><a class="header" href="#前言" id="前言">前言</a></h2>
+<p>前一段时间在整理后端的架构和选型，关于微服务设计这部分，也预留 DDD 的”作业“，但对于如何工程化落地 DDD 还没有一个清晰的思路，现有应用架构中的分层模型还是 MVC；关于领域划分，边界上下文、防腐层等 DDD 的经典理论抱有”赞同“，却又限制于没有实践指导的“工具”，故一直没有这部分的”行动“。</p>
+<p>最近看了 COLA 的架构和一些设计，觉得 COLA 具有足够的理论依据也具有相当的落地实践性，是一个不错的 DDD 落地的方法论和实践指导，但个人在理解 COLA 的设计时还是觉得有一些问题。 主要集中在没有足够的场景案例去分析整个落地实践的路径，没有深入阐述分层分包的原则和实际开发联系；特别是 DEMO 上比较粗糙，与 COLA 阐述的一些架构原则没有呼应，细节上 COLA 中的 DEMO 不具典型意义；另外就是没有介绍对于 DDD 、CQRS 的借鉴，在架构和实践中的关系。</p>
+<p>由此，并就想着开始准备自己组装一个 DDD 的落地实践，使用 COLA 的设计理念，融合微服务框架以及包含一些后端开发时会涉及的常用的库/组件（ORM、Flyawy、Skywaking、MapStruct、EventBus等），按照当前我个的理解把这个“脚手架”项目命名为 AAA（Application Architecture Archetype（应用架构原型）），希望能够真正落地实践 DDD，并用于实际项目指导目前团队的应用架构的演进。</p>
+<h2><a class="header" href="#ddd-分层架构-todo" id="ddd-分层架构-todo">DDD 分层架构 （todo）</a></h2>
+<img src="tech/project/AAA/assets/ddd-layer-arch.webp" style="zoom:50%;" />
+<p><em><strong><code>图片来源：《DDD 实战》</code></strong></em></p>
+<h2><a class="header" href="#cola-分层架构-todo" id="cola-分层架构-todo">COLA 分层架构 （todo）</a></h2>
+<p><img src="tech/project/AAA/assets/cola-layer-arch.png" alt="cola" /></p>
+<h2><a class="header" href="#aaa-todo" id="aaa-todo">AAA （todo）</a></h2>
+<h1><a class="header" href="#ref-1" id="ref-1">ref</a></h1>
+<p><a href="https://www.51cto.com/article/644144.html">DDD 里面的 CQRS 是什么？</a></p>
+<p><a href="https://github.com/alibaba/COLA/issues/203">COLA 层次划分理解</a></p>
+<p><a href="https://github.com/alibaba/COLA/issues/271">COLA POJO 代码太多的讨论</a></p>
 <h1><a class="header" href="#java-后端框架选型指南" id="java-后端框架选型指南">Java 后端框架选型指南</a></h1>
 <blockquote>
 <p>By <a href="tech/backend/">Siu</a> 2022/3/26</p>
 </blockquote>
-<h2><a class="header" href="#前言" id="前言">前言</a></h2>
+<h2><a class="header" href="#前言-1" id="前言-1">前言</a></h2>
 <p>其实从 2019 年疫情😷刚开始时就开始准备这部分的工作，2020-2021 其实也有了很所实践和总结，但整体还不够全面和立体，故这段时间趁着整理过往的实践再次梳理和总结关于 Java 后端的框架的选型。</p>
 <h2><a class="header" href="#整体架构" id="整体架构">整体架构</a></h2>
 <blockquote>
@@ -2306,7 +2323,7 @@ vrrp_instance haproxy-vip {
 <li><del>宽表限制：默认为 1017，最大可调至 4096</del></li>
 <li><del>技术的掌握能力</del></li>
 </ul>
-<h2><a class="header" href="#ref-1" id="ref-1">REF</a></h2>
+<h2><a class="header" href="#ref-2" id="ref-2">REF</a></h2>
 <ul>
 <li>
 <p>Kudu</p>
@@ -2467,7 +2484,7 @@ vrrp_instance haproxy-vip {
 <p>        <a href="http://192.168.1.23/cecdat/framework/devops/jpl">jpl</a> 是一个内部公共的 Jenkins Pipeline Library ，基于 Jenkins 扩展共享库（<em><strong>Shared Library</strong></em>）的能力，用 groovy 代码定义和编排 CI/CD 流水线<strong>阶段</strong>和<strong>步骤</strong>，用于简化项目的 CI/CD 配置，提升项目的 CI/CD 能力：使项目保持<strong>频繁部署</strong>，快速生成可部署的软件，提高项目的<strong>能见度</strong>；快速发布，能够应对业务需求，并更快地实现软件价值；编码-&gt;测试-&gt;上线-&gt;交付的<strong>迭代周期缩短</strong>，同时获得迅速反馈。</p>
 <p>        <code>jpl</code> 基于 Jenkins 作为 CI/CD 的执行引擎，并结合<strong>当前公司业务特性</strong>和<strong>规范</strong>设计的多分支流水线，实现了包括：代码检出、前置检查（仓库规范、分支模型规范、<code>Semver</code> 规范）、编译和打包、Sonar 扫描、提交分析、自动归档制品、部署、触发自动化接口测试、自动合并代码、归档已发布代码、邮件通知等流水线步骤；借助 <code>Jenkins BlueOcean</code> 的功能使构建过程<strong>实时可视</strong>，并设计实现了一些常用的<strong>图形化操作</strong>：启停服务、从制品库发布、手动部署所有服务、刷新<code>Jenkinsfile</code>、跳过阶段、暂停进入调试。</p>
 <p>        <code>jpl</code> 实现了 <em><strong><code>Pipeline as Code</code></strong></em>，为 CI/CD 实践过程中的“最后一公里”保驾护航。</p>
-<h3><a class="header" href="#ref-2" id="ref-2">Ref</a></h3>
+<h3><a class="header" href="#ref-3" id="ref-3">Ref</a></h3>
 <ul>
 <li>
 <p><em>表-1 来自《企业级 DevOps 实战》</em></p>
@@ -2689,7 +2706,7 @@ select * from example_db.t_uniq_model_test order by `date` desc;
 <p><img src="tech/db/doris/doris-uniq-model/assets/image-20220415154626995.png" alt="image-20220415154626995" /></p>
 <p><img src="tech/db/doris/doris-uniq-model/assets/image-20220415155133218.png" alt="image-20220415155133218" /></p>
 <h4><a class="header" href="#性能测试todo" id="性能测试todo">性能测试（todo）</a></h4>
-<h1><a class="header" href="#ref-3" id="ref-3">ref</a></h1>
+<h1><a class="header" href="#ref-4" id="ref-4">ref</a></h1>
 <p>https://doris.apache.org/branch-0.15/zh-CN/getting-started/data-model-rollup.html#uniq-%E6%A8%A1%E5%9E%8B</p>
 <p>https://doris.apache.org/branch-0.15/zh-CN/getting-started/data-partition.html#%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86-2</p>
 <p>https://doris.apache.org/branch-0.15/zh-CN/administrator-guide/load-data/batch-delete-manual.html#%E8%AF%AD%E6%B3%95</p>
@@ -2750,7 +2767,7 @@ select * from example_db.t_uniq_model_test order by `date` desc;
 <blockquote>
 <p>By <a href="tech/bestpractices/How-to-write-an-outline-for-a-technical-solution/">Siu</a> 2022/3/28</p>
 </blockquote>
-<h2><a class="header" href="#前言-1" id="前言-1">前言</a></h2>
+<h2><a class="header" href="#前言-2" id="前言-2">前言</a></h2>
 <p>首先问题来源于工作上需要将最近做的一些 POC 整理成一个解决方案提供给应用平台。所以从以往的写作经验来看，首先需要能梳理出一个“大纲”，去合理规划整个解决方案的内容架构，同时这个大纲必须带上“技术”、“方案”这两个命题去思考总结。</p>
 <h2><a class="header" href="#要思考哪些问题" id="要思考哪些问题">要思考哪些问题</a></h2>
 <h3><a class="header" href="#写给谁" id="写给谁">写给谁</a></h3>
@@ -2785,7 +2802,7 @@ select * from example_db.t_uniq_model_test order by `date` desc;
 </ul>
 <h2><a class="header" href="#大纲的内容示例" id="大纲的内容示例">大纲的内容示例</a></h2>
 <p><img src="tech/bestpractices/How-to-write-an-outline-for-a-technical-solution/assets/image-20220328151253737.png" alt="image-20220328151253737" /></p>
-<h2><a class="header" href="#ref-4" id="ref-4">ref</a></h2>
+<h2><a class="header" href="#ref-5" id="ref-5">ref</a></h2>
 <p><a href="https://jiamaoxiang.top/2021/05/04/%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AF%A5%E5%A6%82%E4%BD%95%E5%86%99%E4%B8%80%E7%AF%87%E9%AB%98%E8%B4%A8%E9%87%8F%E7%9A%84%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/">程序员该如何写一篇高质量的技术文章</a></p>
 <p><strong>文档编号：</strong></p>
 <p><strong>xxx有限公司</strong></p>
@@ -2908,7 +2925,7 @@ select * from example_db.t_uniq_model_test order by `date` desc;
 <blockquote>
 <p>By <a href="tech/bestpractices/">Siu</a> 2022/3/17</p>
 </blockquote>
-<h2><a class="header" href="#前言-2" id="前言-2">前言</a></h2>
+<h2><a class="header" href="#前言-3" id="前言-3">前言</a></h2>
 <p>当前的团队的工作比较多的会在关注和执行 sql 性能相关的测试，对于标准的测试模型，如 TPC 范围内的工具有比较好的实践方式，对于自定义和具体的场景目前团队还没有去总结一个比较好的”工具方案“，这里主要围绕这个问题去做一些分享。</p>
 <h2><a class="header" href="#先看看有哪些现有工具" id="先看看有哪些现有工具">先看看有哪些现有工具？</a></h2>
 <ul>
@@ -3050,7 +3067,7 @@ rudf4-t-4096   mixed  1.447  1.396  1.518  10          1
 rudf6-t-16384
 #########################################################################
 </code></pre>
-<h2><a class="header" href="#ref-5" id="ref-5">ref</a></h2>
+<h2><a class="header" href="#ref-6" id="ref-6">ref</a></h2>
 <ul>
 <li><a href="https://sourceforge.net/projects/benchmarksql/">测试工具：BenchMarkSQL 5.0</a> | <a href="https://support.huaweicloud.com/tstg-kunpengdbs/kunpengbenchmarksql_06_0002.html">使用方法</a></li>
 <li><a href="https://tech.meituan.com/2017/07/14/sysbench-meituan.html">Sysbench 在美团点评中的应用</a></li>
@@ -3585,7 +3602,7 @@ sh build.sh --clean --be --fe --ui
 <p>需要 which 一下看看 gcc 的位置，在 <code>env.sh</code> 中设置一下 <code>${DORIS_GCC_HOME}</code></p>
 </li>
 </ul>
-<h2><a class="header" href="#ref-6" id="ref-6">ref</a></h2>
+<h2><a class="header" href="#ref-7" id="ref-7">ref</a></h2>
 <ul>
 <li><a href="https://doris.apache.org/zh-CN/extending-doris/udf/remote-user-defined-function.html">Doris Remote UDF</a></li>
 <li><a href="https://doris.apache.org/zh-CN/installing/compilation.html#%E4%BD%BF%E7%94%A8-docker-%E5%BC%80%E5%8F%91%E9%95%9C%E5%83%8F%E7%BC%96%E8%AF%91-%E6%8E%A8%E8%8D%90">Doris 编译</a></li>
@@ -5019,7 +5036,7 @@ This reverts commit 667ecc1654a317a13331b17617d973392f415f02.
 <h4><a class="header" href="#create-merge-request-1" id="create-merge-request-1">Create Merge Request</a></h4>
 <p><img src="tech/bestpractices/./assets/image-20200513232420455.png" alt="image-20200513232420455" /></p>
 <p><img src="tech/bestpractices/./assets/image-20200513232758013.png" alt="image-20200513232758013" /></p>
-<h1><a class="header" href="#ref-7" id="ref-7">Ref</a></h1>
+<h1><a class="header" href="#ref-8" id="ref-8">Ref</a></h1>
 <p><a href="https://linux.cn/article-8503-1.html">GitLab 工作流概览</a></p>
 <h1><a class="header" href="#gitlab-issue-规范指南" id="gitlab-issue-规范指南">Gitlab Issue 规范指南</a></h1>
 <blockquote>
