@@ -20,7 +20,6 @@
     - [账号体系](./tech/project/cicd/design/账号体系.md)
   - [Doris Uniq 模型：分析场景下保证 Key 的唯一性](./tech/db/doris/doris-uniq-model/index.md)
   
-
 - [最佳实践](./SUMMARY.md)
 
   - [怎样写一个技术方案的大纲](./tech/bestpractices/How-to-write-an-outline-for-a-technical-solution/index.md)
